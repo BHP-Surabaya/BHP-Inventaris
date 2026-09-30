@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 250" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap');
+      .brand-text { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+      .brand-inv { font-weight: 700; font-size: 46px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .brand-bhp { font-weight: 800; font-size: 46px; fill: #F59E0B; letter-spacing: 0.5px; }
+      .sub-title { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 18px; fill: #FFFFFF; letter-spacing: 0.2px; }
+      .motto-text { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; font-weight: 400; font-size: 14.5px; fill: rgba(255, 255, 255, 0.88); letter-spacing: 0.2px; }
+    </style>
+  </defs>
+
+  <!-- Logo Icon -->
+  <g transform="translate(6, 6)">
+    <!-- Pediment / Gable Roof Triangle -->
+    <path d="M38 10L65 27H11L38 10Z" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+    <!-- Entablature / Roof Base Beam -->
+    <rect x="8" y="29.5" width="60" height="5.5" rx="2.5" fill="#FFFFFF"/>
+    <!-- 3 Pillars -->
+    <rect x="16.5" y="38" width="8" height="20" rx="1.5" fill="#FFFFFF"/>
+    <rect x="34" y="38" width="8" height="20" rx="1.5" fill="#FFFFFF"/>
+    <rect x="51.5" y="38" width="8" height="20" rx="1.5" fill="#FFFFFF"/>
+    <!-- Golden Yellow Stylobate Bar -->
+    <rect x="13.5" y="60.5" width="49" height="4.5" rx="2.25" fill="#F59E0B"/>
+    <!-- Bottom Foundation Plinth -->
+    <rect x="7" y="67" width="62" height="5.5" rx="2.75" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Brand Title: InvBHP -->
+  <text x="88" y="60" class="brand-text">
+    <tspan class="brand-inv">Inv</tspan><tspan class="brand-bhp">BHP</tspan>
+  </text>
+
+  <!-- Subtitle (Deskripsi Sistem) -->
+  <text x="10" y="116" class="sub-title">Sistem Pendukung Inventaris Terpadu</text>
+  <text x="10" y="141" class="sub-title">Balai Harta Peninggalan</text>
+
+  <!-- Yellow Accent Divider Line -->
+  <rect x="10" y="159" width="44" height="4" rx="2" fill="#F59E0B"/>
+
+  <!-- Motto / Tagline -->
+  <text x="10" y="188" class="motto-text">Melayani dengan Integritas,</text>
+  <text x="10" y="209" class="motto-text">Menuju Kepastian Hukum</text>
+</svg>

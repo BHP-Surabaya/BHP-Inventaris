@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Pediment / Gable Roof Triangle -->
+  <path d="M50 14L84 34H16L50 14Z" stroke="white" stroke-width="5.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+  
+  <!-- Entablature / Roof Base Beam -->
+  <rect x="13" y="36.5" width="74" height="6.5" rx="3.25" fill="white"/>
+  
+  <!-- 3 Pillars / Columns -->
+  <!-- Left Pillar -->
+  <rect x="22.5" y="46" width="10" height="23" rx="2" fill="white"/>
+  <!-- Center Pillar -->
+  <rect x="45" y="46" width="10" height="23" rx="2" fill="white"/>
+  <!-- Right Pillar -->
+  <rect x="67.5" y="46" width="10" height="23" rx="2" fill="white"/>
+  
+  <!-- Golden Yellow Accent Stylobate Bar -->
+  <rect x="18" y="72" width="64" height="5.5" rx="2.75" fill="#F59E0B"/>
+  
+  <!-- Bottom Plinth / Base Foundation -->
+  <rect x="11" y="80.5" width="78" height="6.5" rx="3.25" fill="white"/>
+</svg>

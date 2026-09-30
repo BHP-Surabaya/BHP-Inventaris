@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InvBHP - Brand Identity & Logo Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #F59E0B;
+      --primary-dark: #D97706;
+      --bg-dark: #0B1329;
+      --bg-card: rgba(255, 255, 255, 0.08);
+      --border-card: rgba(255, 255, 255, 0.15);
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: #090E1A;
+      color: #E2E8F0;
+      min-height: 100vh;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* Top Navigation */
+    header {
+      background: rgba(11, 19, 41, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-tag {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #FBBF24;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section with Login Mockup */
+    .hero-mockup-section {
+      margin: 32px 0 60px;
+    }
+
+    .section-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    /* The Login View Replica Screen */
+    .login-screen-preview {
+      position: relative;
+      width: 100%;
+      height: 620px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 80px;
+      background-image: linear-gradient(to right, rgba(10, 15, 30, 0.68) 0%, rgba(10, 15, 30, 0.30) 50%, rgba(10, 15, 30, 0.55) 100%), url('/images/warehouse-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.4s ease-in-out;
+    }
+
+    /* Left Branding area */
+    .branding-col {
+      max-width: 480px;
+      z-index: 2;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .brand-header-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .building-icon-svg {
+      width: 58px;
+      height: 58px;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    }
+
+    .brand-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
+      line-height: 1;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    .brand-title span {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .brand-subtitle {
+      font-size: 20px;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 1.35;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+      margin-bottom: 18px;
+    }
+
+    .yellow-divider {
+      width: 46px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 4px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.5);
+    }
+
+    .brand-motto {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.45;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* Right Glassmorphism Card (matching screenshot) */
+    .glass-card {
+      width: 420px;
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 40px 36px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      z-index: 2;
+    }
+
+    .avatar-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: #FFFFFF;
+    }
+
+    .login-heading {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .login-subtext {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 24px;
+    }
+
+    .mock-input {
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #475569;
+      font-size: 14px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .mock-btn {
+      width: 100%;
+      background: #2563EB;
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    .card-footer-text {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .card-footer-text a {
+      color: #FBBF24;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Grid of Logo Assets */
+    .assets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .asset-card {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .asset-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .asset-preview-box {
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      position: relative;
+    }
+
+    .bg-dark-preview {
+      background: radial-gradient(circle at center, #1E293B 0%, #0F172A 100%);
+    }
+
+    .bg-light-preview {
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+    }
+
+    .bg-blue-preview {
+      background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+    }
+
+    .asset-info {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .asset-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 4px;
+    }
+
+    .asset-description {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .btn-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: var(--primary);
+      color: #0F172A;
+      border-color: var(--primary);
+    }
+
+    .btn-action.primary {
+      background: #F59E0B;
+      color: #0F172A;
+      border-color: #F59E0B;
+    }
+
+    .btn-action.primary:hover {
+      background: #D97706;
+      border-color: #D97706;
+    }
+
+    /* Live Tagline Customizer */
+    .customizer-box {
+      background: #0F172A;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 48px;
+    }
+
+    .customizer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #CBD5E1;
+    }
+
+    .form-group input {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      z-index: 100;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .login-screen-preview {
+        flex-direction: column;
+        height: auto;
+        padding: 40px 24px;
+        gap: 40px;
+      }
+      .glass-card {
+        width: 100%;
+      }
+      .customizer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <a href="#" class="brand-nav">
+      <!-- Mini Icon -->
+      <svg class="building-icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 100 100" fill="none">
+        <path d="M50 14L84 34H16L50 14Z" stroke="white" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+        <rect x="13" y="36.5" width="74" height="7" rx="3.5" fill="white"/>
+        <rect x="22.5" y="47" width="10" height="22" rx="2" fill="white"/>
+        <rect x="45" y="47" width="10" height="22" rx="2" fill="white"/>
+        <rect x="67.5" y="47" width="10" height="22" rx="2" fill="white"/>
+        <rect x="18" y="72.5" width="64" height="6" rx="3" fill="#F59E0B"/>
+        <rect x="11" y="81.5" width="78" height="7" rx="3.5" fill="white"/>
+      </svg>
+      <span style="font-size: 22px; font-weight: 700; color: white;">Inv<span style="color: #F59E0B; font-weight: 800;">BHP</span></span>
+      <span class="nav-tag">Official Brand Identity</span>
+    </a>
+
+    <div style="display: flex; gap: 12px;">
+      <a href="#assets" class="btn-action primary">Lihat Format Logo</a>
+      <a href="/login" class="btn-action">Buka Login App</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero: Exact Login Page Replica with InvBHP Branding -->
+    <section class="hero-mockup-section">
+      <h2 class="section-title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+        <p class="section-desc" style="margin-bottom: 0;">Desain logo InvBHP dan tema latar belakang inventaris.</p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn-action primary" id="btnBg1" onclick="switchBg('warehouse')">📦 Gudang Modern (Dark)</button>
+          <button class="btn-action" id="btnBg2" onclick="switchBg('bright')">🏢 Gudang Logistik (Bright)</button>
+          <button class="btn-action" id="btnBg3" onclick="switchBg('office')">🏛️ Gedung Kantor BHP</button>
+        </div>
+      </div>
+
+      <div class="login-screen-preview" id="mockupScreen">
+        <!-- Left Side: InvBHP Brand Identity -->
+        <div class="branding-col">
+          <div class="brand-header-row">
+            <!-- Building Courthouse Icon with Gold Accent -->
+            <svg class="building-icon-svg" viewBox="0 0 100 100" fill="none">
+              <!-- Triangular Pediment -->
+              <path d="M50 14L84 34H16L50 14Z" stroke="white" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+              <!-- Entablature -->
+              <rect x="13" y="36.5" width="74" height="7" rx="3.5" fill="white"/>
+              <!-- 3 Columns -->
+              <rect x="22.5" y="47" width="10" height="22" rx="2" fill="white"/>
+              <rect x="45" y="47" width="10" height="22" rx="2" fill="white"/>
+              <rect x="67.5" y="47" width="10" height="22" rx="2" fill="white"/>
+              <!-- Golden Yellow Accent Bar -->
+              <rect x="18" y="72.5" width="64" height="6" rx="3" fill="#F59E0B"/>
+              <!-- Base Plinth -->
+              <rect x="11" y="81.5" width="78" height="7" rx="3.5" fill="white"/>
+            </svg>
+
+            <!-- Brand Name InvBHP -->
+            <div class="brand-title">
+              Inv<span>BHP</span>
+            </div>
+          </div>
+
+          <!-- Description / Subtitle -->
+          <div class="brand-subtitle" id="previewSubtitle">
+            Sistem Pendukung Inventaris Terpadu<br/>
+            Balai Harta Peninggalan
+          </div>
+
+          <!-- Accent Line -->
+          <div class="yellow-divider"></div>
+
+          <!-- Motto -->
+          <div class="brand-motto" id="previewMotto">
+            Melayani dengan Integritas,<br/>
+            Menuju Kepastian Hukum dan Akuntabilitas
+          </div>
+        </div>
+
+        <!-- Right Side: Glassmorphism Card Replica -->
+        <div class="glass-card">
+          <div class="avatar-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3 class="login-heading">Login</h3>
+          <p class="login-subtext">Masuk untuk mengakses aplikasi InvBHP</p>
+
+          <div class="mock-input">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Username / Email</span>
+          </div>
+
+          <div class="mock-input" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Password</span>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.8); margin: 10px 0 16px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" checked /> Ingat saya
+            </label>
+            <a href="#" style="color: rgba(255,255,255,0.9); text-decoration: none;">Lupa Kata Sandi?</a>
+          </div>
+
+          <button class="mock-btn">
+            Masuk
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+
+          <div class="card-footer-text">
+            Belum memiliki akun? <a href="#">Daftar Akun Baru</a>
+          </div>
+
+          <div style="text-align: center; margin-top: 18px; font-size: 11px; color: rgba(255,255,255,0.6);">
+            Balai Harta Peninggalan dan Kurator Negara
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customizer Section: Edit Description & Motto Live -->
+    <section class="customizer-box">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h3 style="font-size: 18px; font-weight: 700; color: #F59E0B; margin-bottom: 4px;">
+            Penyesuaian Deskripsi & Motto (Live Editor)
+          </h3>
+          <p style="font-size: 13px; color: #94A3B8;">Ubah teks deskripsi di bawah untuk melihat logo menyesuaikan secara otomatis.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-action" onclick="setPreset('inventaris')">Preset Inventaris</button>
+          <button class="btn-action" onclick="setPreset('resmi')">Preset Kemenkumham</button>
+          <button class="btn-action" onclick="setPreset('aset')">Preset Manajemen Aset</button>
+        </div>
+      </div>
+
+      <div class="customizer-grid">
+        <div class="form-group">
+          <label>Deskripsi Sistem (Baris 1 & 2):</label>
+          <input type="text" id="inputSub1" value="Sistem Pendukung Inventaris Terpadu" oninput="updateLiveText()" />
+          <input type="text" id="inputSub2" value="Balai Harta Peninggalan" oninput="updateLiveText()" style="margin-top: 6px;" />
+        </div>
+        <div class="form-group">
+          <label>Motto / Slogan (Baris 1 & 2):</label>
+          <input type="text" id="inputMotto1" value="Melayani dengan Integritas," oninput="updateLiveText()" />
+          <input type="text" id="inputMotto2" value="Menuju Kepastian Hukum dan Akuntabilitas" oninput="updateLiveText()" style="margin-top: 6px;" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Assets Grid Section -->
+    <section id="assets">
+      <h2 class="section-title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Pilihan Paket Aset Desain InvBHP
+      </h2>
+      <p class="section-desc">Format SVG vector lengkap dan siap pakai di berbagai media (Dark, Light, Horizontal, Icon).</p>
+
+      <div class="assets-grid">
+
+        <!-- 1. Full Lockup Dark -->
+        <div class="asset-card">
+          <div class="asset-preview-box bg-dark-preview">
+            <img src="/images/logo-invbhp-dark.svg" alt="InvBHP Logo Dark" style="max-width: 100%; max-height: 180px;" id="imgDarkLogo" />
+          </div>
+          <div class="asset-info">
+            <div>
+              <div class="asset-title">Logo Utama (Dark Mode / Login)</div>
+              <div class="asset-description">Format lengkap dengan ikon gedung, teks InvBHP, deskripsi sistem, garis emas, dan motto. Cocok untuk background gelap atau foto.</div>
+            </div>
+            <div class="btn-actions">
+              <a href="/images/logo-invbhp-dark.svg" download="logo-invbhp-dark.svg" class="btn-action primary">Unduh SVG</a>
+              <button class="btn-action" onclick="downloadPng('dark')">Unduh PNG</button>
+              <button class="btn-action" onclick="copySvgUrl('/images/logo-invbhp-dark.svg')">Salin Link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Full Lockup Light -->
+        <div class="asset-card">
+          <div class="asset-preview-box bg-light-preview">
+            <img src="/images/logo-invbhp-light.svg" alt="InvBHP Logo Light" style="max-width: 100%; max-height: 180px;" />
+          </div>
+          <div class="asset-info">
+            <div>
+              <div class="asset-title">Logo Utama (Light Mode / Cetak)</div>
+              <div class="asset-description">Versi warna slate & amber untuk latar belakang putih, surat resmi, laporan PDF, kop surat, dan dokumen inventaris.</div>
+            </div>
+            <div class="btn-actions">
+              <a href="/images/logo-invbhp-light.svg" download="logo-invbhp-light.svg" class="btn-action primary">Unduh SVG</a>
+              <button class="btn-action" onclick="downloadPng('light')">Unduh PNG</button>
+              <button class="btn-action" onclick="copySvgUrl('/images/logo-invbhp-light.svg')">Salin Link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Horizontal Header Logo (Light) -->
+        <div class="asset-card">
+          <div class="asset-preview-box bg-light-preview">
+            <img src="/images/logo-invbhp-horizontal.svg" alt="InvBHP Horizontal Light" style="max-width: 220px;" />
+          </div>
+          <div class="asset-info">
+            <div>
+              <div class="asset-title">Horizontal Logo (Navbar / Header)</div>
+              <div class="asset-description">Kombinasi ramping ikon + nama InvBHP. Sangat ideal untuk menu navigasi aplikasi, dashboard header, dan badge.</div>
+            </div>
+            <div class="btn-actions">
+              <a href="/images/logo-invbhp-horizontal.svg" download="logo-invbhp-horizontal.svg" class="btn-action primary">Unduh SVG</a>
+              <button class="btn-action" onclick="copySvgUrl('/images/logo-invbhp-horizontal.svg')">Salin Link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Horizontal Header Logo (White/Dark) -->
+        <div class="asset-card">
+          <div class="asset-preview-box bg-blue-preview">
+            <img src="/images/logo-invbhp-horizontal-white.svg" alt="InvBHP Horizontal White" style="max-width: 220px;" />
+          </div>
+          <div class="asset-info">
+            <div>
+              <div class="asset-title">Horizontal Logo (Dark / Blue Header)</div>
+              <div class="asset-description">Ikon putih & aksen emas untuk navbar bertema gelap atau biru Kemenkumham.</div>
+            </div>
+            <div class="btn-actions">
+              <a href="/images/logo-invbhp-horizontal-white.svg" download="logo-invbhp-horizontal-white.svg" class="btn-action primary">Unduh SVG</a>
+              <button class="btn-action" onclick="copySvgUrl('/images/logo-invbhp-horizontal-white.svg')">Salin Link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. App Icon Only -->
+        <div class="asset-card">
+          <div class="asset-preview-box bg-dark-preview">
+            <div style="background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%); width: 100px; height: 100px; border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);">
+              <img src="/images/logo-invbhp-icon.svg" alt="InvBHP Icon" style="width: 64px; height: 64px;" />
+            </div>
+          </div>
+          <div class="asset-info">
+            <div>
+              <div class="asset-title">Simbol Ikon Mandiri (App Icon / Favicon)</div>
+              <div class="asset-description">Ikon gedung pilar 3 khas Balai Harta Peninggalan dengan aksen emas presisi. Cocok untuk favicon tab browser, logo profil, & launcher app.</div>
+            </div>
+            <div class="btn-actions">
+              <a href="/images/logo-invbhp-icon.svg" download="logo-invbhp-icon.svg" class="btn-action primary">Unduh SVG</a>
+              <button class="btn-action" onclick="copySvgUrl('/images/logo-invbhp-icon.svg')">Salin Link</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast">Link berhasil disalin ke clipboard!</div>
+
+  <!-- Hidden canvas for raster PNG export -->
+  <canvas id="exportCanvas" style="display: none;"></canvas>
+
+  <script>
+    function updateLiveText() {
+      const s1 = document.getElementById('inputSub1').value;
+      const s2 = document.getElementById('inputSub2').value;
+      const m1 = document.getElementById('inputMotto1').value;
+      const m2 = document.getElementById('inputMotto2').value;
+
+      document.getElementById('previewSubtitle').innerHTML = s1 + '<br/>' + s2;
+      document.getElementById('previewMotto').innerHTML = m1 + '<br/>' + m2;
+    }
+
+    function setPreset(type) {
+      if (type === 'inventaris') {
+        document.getElementById('inputSub1').value = 'Sistem Pendukung Inventaris Terpadu';
+        document.getElementById('inputSub2').value = 'Balai Harta Peninggalan';
+        document.getElementById('inputMotto1').value = 'Melayani dengan Integritas,';
+        document.getElementById('inputMotto2').value = 'Menuju Kepastian Hukum dan Akuntabilitas';
+      } else if (type === 'resmi') {
+        document.getElementById('inputSub1').value = 'Sistem Informasi Manajemen Inventaris';
+        document.getElementById('inputSub2').value = 'Balai Harta Peninggalan & Kurator Negara';
+        document.getElementById('inputMotto1').value = 'Melayani dengan Integritas,';
+        document.getElementById('inputMotto2').value = 'Menuju Kepastian Hukum';
+      } else if (type === 'aset') {
+        document.getElementById('inputSub1').value = 'Sistem Pengelolaan Logistik & Aset';
+        document.getElementById('inputSub2').value = 'Balai Harta Peninggalan';
+        document.getElementById('inputMotto1').value = 'Akurat, Transparan, & Terpercaya,';
+        document.getElementById('inputMotto2').value = 'Mewujudkan Tata Kelola Barang Habis Pakai';
+      }
+      updateLiveText();
+      showToast('Preset diterapkan!');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function copySvgUrl(path) {
+      const fullUrl = window.location.origin + path;
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        showToast('URL SVG disalin: ' + path);
+      });
+    }
+
+    function downloadPng(variant) {
+      const canvas = document.getElementById('exportCanvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const svgPath = variant === 'dark' ? '/images/logo-invbhp-dark.svg' : '/images/logo-invbhp-light.svg';
+      
+      img.onload = function() {
+        // High-res 2x scaling
+        canvas.width = 920;
+        canvas.height = 500;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        if (variant === 'dark') {
+          ctx.fillStyle = '#0B1329';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else {
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        ctx.drawImage(img, 0, 0, 920, 500);
+        
+        const a = document.createElement('a');
+        a.download = `logo-invbhp-${variant}.png`;
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+        showToast('File PNG berhasil diunduh!');
+      };
+      img.src = svgPath;
+    }
+
+    function switchBg(theme) {
+      const screen = document.getElementById('mockupScreen');
+      const b1 = document.getElementById('btnBg1');
+      const b2 = document.getElementById('btnBg2');
+      const b3 = document.getElementById('btnBg3');
+      [b1, b2, b3].forEach(b => b.classList.remove('primary'));
+
+      if (theme === 'warehouse') {
+        screen.style.backgroundImage = "linear-gradient(to right, rgba(10, 15, 30, 0.68) 0%, rgba(10, 15, 30, 0.30) 50%, rgba(10, 15, 30, 0.55) 100%), url('/images/warehouse-bg.jpg')";
+        b1.classList.add('primary');
+        showToast('Background diubah ke Gudang Modern!');
+      } else if (theme === 'bright') {
+        screen.style.backgroundImage = "linear-gradient(to right, rgba(10, 15, 30, 0.78) 0%, rgba(10, 15, 30, 0.45) 50%, rgba(10, 15, 30, 0.70) 100%), url('/images/warehouse-bright-bg.jpg')";
+        b2.classList.add('primary');
+        showToast('Background diubah ke Gudang Logistik!');
+      } else {
+        screen.style.backgroundImage = "linear-gradient(to right, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.25) 50%, rgba(15, 23, 42, 0.5) 100%), url('/images/bhp-bg.jpg')";
+        b3.classList.add('primary');
+        showToast('Background diubah ke Gedung BHP!');
+      }
+    }
+  </script>
+</body>
+</html>

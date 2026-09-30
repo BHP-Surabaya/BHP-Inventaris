@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 64" fill="none">
+  <defs>
+    <style>
+      .brand-inv { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 34px; fill: #0F172A; letter-spacing: -0.5px; }
+      .brand-bhp { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 800; font-size: 34px; fill: #F59E0B; letter-spacing: 0.5px; }
+    </style>
+  </defs>
+
+  <!-- Icon scaled to 48px height -->
+  <g transform="translate(4, 8) scale(0.48)">
+    <path d="M50 14L84 34H16L50 14Z" stroke="#0F172A" stroke-width="5.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+    <rect x="13" y="36.5" width="74" height="6.5" rx="3.25" fill="#0F172A"/>
+    <rect x="22.5" y="46" width="10" height="23" rx="2" fill="#0F172A"/>
+    <rect x="45" y="46" width="10" height="23" rx="2" fill="#0F172A"/>
+    <rect x="67.5" y="46" width="10" height="23" rx="2" fill="#0F172A"/>
+    <rect x="18" y="72" width="64" height="5.5" rx="2.75" fill="#F59E0B"/>
+    <rect x="11" y="80.5" width="78" height="6.5" rx="3.25" fill="#0F172A"/>
+  </g>
+
+  <!-- Text -->
+  <text x="62" y="44">
+    <tspan class="brand-inv">Inv</tspan><tspan class="brand-bhp">BHP</tspan>
+  </text>
+</svg>
