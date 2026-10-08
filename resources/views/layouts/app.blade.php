@@ -84,13 +84,13 @@
 
                         <!-- Bon Barang Dropdown Group -->
                         <div x-data="{ 
-                                open: {{ request()->routeIs('pembelian.*') || request()->routeIs('stock-opname.*') ? 'true' : 'false' }} 
+                                open: {{ request()->routeIs('bon.*') || request()->routeIs('pembelian.*') || request()->routeIs('stock-opname.*') ? 'true' : 'false' }} 
                              }" 
                              class="space-y-1">
                             <!-- Parent Button / Toggle -->
                             <button type="button" 
                                     @click="open = !open" 
-                                    class="w-full flex items-center justify-between px-4 py-3 rounded-2xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('pembelian.*') || request()->routeIs('stock-opname.*') ? 'bg-white/[0.08] text-white' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
+                                    class="w-full flex items-center justify-between px-4 py-3 rounded-2xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('bon.*') || request()->routeIs('pembelian.*') || request()->routeIs('stock-opname.*') ? 'bg-white/[0.08] text-white' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
                                 <div class="flex items-center gap-3.5">
                                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                         <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.5L19 7.5V19a2 2 0 0 1-2 2Z"/>
@@ -104,7 +104,7 @@
                                 </svg>
                             </button>
 
-                            <!-- Submenu Items (Pembelian & Stock Opname) -->
+                            <!-- Submenu Items -->
                             <div x-show="open" 
                                  x-cloak
                                  x-transition:enter="transition ease-out duration-150" 
@@ -115,31 +115,42 @@
                                  x-transition:leave-end="opacity-0 -translate-y-1" 
                                  class="pl-4 pr-1 py-1 space-y-1 border-l border-slate-700/60 ml-6">
                                 
-                                <!-- Submenu 1: Pembelian -->
-                                <a href="{{ route('pembelian.index') }}" 
-                                   class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-xs transition-all duration-150 {{ request()->routeIs('pembelian.*') ? 'bg-[#2563eb] text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
+                                <!-- Submenu 1: Pengeluaran ATK (Kasir Scan Barcode) -->
+                                <a href="{{ route('bon.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-xs transition-all duration-150 {{ request()->routeIs('bon.*') ? 'bg-[#2563eb] text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
                                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                        <circle cx="8" cy="21" r="1"/>
-                                        <circle cx="19" cy="21" r="1"/>
-                                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.5L19 7.5V19a2 2 0 0 1-2 2Z"/>
                                     </svg>
-                                    <span>Pembelian</span>
+                                    <span>Pengeluaran ATK</span>
                                 </a>
 
-                                <!-- Submenu 2: Stock Opname -->
-                                <a href="{{ route('stock-opname.index') }}" 
-                                   class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-xs transition-all duration-150 {{ request()->routeIs('stock-opname.*') ? 'bg-[#2563eb] text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
-                                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
-                                        <path d="m9 14 2 2 4-4"/>
-                                    </svg>
-                                    <span>Stock Opname</span>
-                                </a>
+                                @if (Auth::user()?->isAdmin())
+                                    <!-- Submenu 2: Pembelian / Masuk (Khusus Admin) -->
+                                    <a href="{{ route('pembelian.index') }}" 
+                                       class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-xs transition-all duration-150 {{ request()->routeIs('pembelian.*') ? 'bg-[#2563eb] text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
+                                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                            <circle cx="8" cy="21" r="1"/>
+                                            <circle cx="19" cy="21" r="1"/>
+                                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                                        </svg>
+                                        <span>Pembelian / Masuk</span>
+                                    </a>
+
+                                    <!-- Submenu 3: Stock Opname (Khusus Admin) -->
+                                    <a href="{{ route('stock-opname.index') }}" 
+                                       class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-xs transition-all duration-150 {{ request()->routeIs('stock-opname.*') ? 'bg-[#2563eb] text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
+                                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                                            <path d="m9 14 2 2 4-4"/>
+                                        </svg>
+                                        <span>Stock Opname</span>
+                                    </a>
+                                @endif
                             </div>
                         </div>
 
-                        <!-- Cetak Label -->
+                        <!-- Cetak Label (Admin & Pegawai Gudang) -->
                         <a href="{{ route('cetak-label.index') }}" 
                            class="flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('cetak-label.*') ? 'bg-[#2563eb] text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
                             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -149,18 +160,20 @@
                             <span>Cetak Label</span>
                         </a>
 
-                        <!-- Cetak Laporan -->
-                        <a href="{{ route('laporan.index') }}" 
-                           class="flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('laporan.*') ? 'bg-[#2563eb] text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
-                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10 9 9 9 8 9"/>
-                            </svg>
-                            <span>Cetak Laporan</span>
-                        </a>
+                        @if (Auth::user()?->isAdmin())
+                            <!-- Cetak Laporan (Khusus Admin) -->
+                            <a href="{{ route('laporan.index') }}" 
+                               class="flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('laporan.*') ? 'bg-[#2563eb] text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]' }}">
+                                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                                <span>Cetak Laporan</span>
+                            </a>
+                        @endif
                     </nav>
                 </div>
 
@@ -184,14 +197,15 @@
 
                     <!-- Profile Card -->
                     <div class="relative z-10 bg-[#0e274c]/90 backdrop-blur-md border border-white/10 rounded-2xl p-3 flex items-center gap-3 shadow-md">
-                        <div class="w-10 h-10 rounded-full bg-[#183a68] border border-blue-400/30 text-blue-300 flex items-center justify-center flex-shrink-0 shadow-inner">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                        <div class="w-10 h-10 rounded-full bg-[#183a68] border border-blue-400/30 text-blue-300 flex items-center justify-center flex-shrink-0 shadow-inner font-bold text-xs">
+                            {{ substr(Auth::user()?->name ?? 'U', 0, 2) }}
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="text-sm font-bold text-white truncate">{{ Auth::user()?->name ?? 'Pegawai BHP' }}</div>
-                            <div class="text-xs text-slate-400 truncate">{{ Auth::user()?->pekerjaan ?? 'Operator BMN' }}</div>
+                            <div class="text-[11px] text-slate-300 truncate flex items-center gap-1.5 mt-0.5">
+                                <span class="inline-block w-1.5 h-1.5 rounded-full {{ Auth::user()?->isAdmin() ? 'bg-amber-400' : 'bg-emerald-400' }}"></span>
+                                <span class="capitalize font-medium">{{ str_replace('_', ' ', Auth::user()?->role ?? 'Pegawai Gudang') }}</span>
+                            </div>
                         </div>
                     </div>
 

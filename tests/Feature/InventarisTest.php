@@ -208,7 +208,7 @@ class InventarisTest extends TestCase
     public function test_root_redirects_to_inventaris(): void
     {
         $response = $this->get('/');
-        $response->assertRedirect('/inventaris');
+        $response->assertRedirect('/dashboard');
     }
 
     public function test_store_masuk_updates_stock_and_creates_mutation(): void

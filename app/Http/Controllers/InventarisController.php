@@ -118,7 +118,7 @@ class InventarisController extends Controller
 
         $validated['barcode_key'] = "{$validated['kd_barang']}.{$validated['kd_sub']}";
         if (empty($validated['barcode'])) {
-            $validated['barcode'] = 'BMN-' . rand(10000, 99999) . '-' . substr($validated['kd_sub'], -2);
+            $validated['barcode'] = 'BMN-'.rand(10000, 99999).'-'.substr($validated['kd_sub'], -2);
         }
 
         Barang::create($validated);
@@ -131,7 +131,7 @@ class InventarisController extends Controller
      */
     public function export(): StreamedResponse
     {
-        $fileName = 'inventaris_bhp_' . date('Ymd_His') . '.csv';
+        $fileName = 'inventaris_bhp_'.date('Ymd_His').'.csv';
         $barangs = Barang::all();
 
         $headers = [
@@ -293,6 +293,7 @@ class InventarisController extends Controller
     {
         $w = (int) $request->query('w', 75);
         $h = (int) $request->query('h', 50);
+
         return view('inventaris.print_label', compact('barang', 'w', 'h'));
     }
 

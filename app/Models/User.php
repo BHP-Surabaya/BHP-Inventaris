@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'nik', 'phone', 'pekerjaan', 'alamat_ktp', 'alamat_domisili'])]
+#[Fillable(['name', 'email', 'password', 'role', 'nik', 'phone', 'pekerjaan', 'alamat_ktp', 'alamat_domisili'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -32,6 +32,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Cek apakah user adalah admin.
+     */
+    public function isAdmin(): bool
+    {
+        return ($this->role ?? 'pegawai_gudang') === 'admin';
+    }
+
+    /**
+     * Cek apakah user adalah pegawai gudang.
+     */
+    public function isPegawaiGudang(): bool
+    {
+        return ($this->role ?? 'pegawai_gudang') === 'pegawai_gudang';
+    }
+
+    /**
      * Relasi hasMany ke MutasiBarang.
      *
      * @return HasMany<MutasiBarang, $this>
@@ -39,5 +55,15 @@ class User extends Authenticatable
     public function mutasiBarangs(): HasMany
     {
         return $this->hasMany(MutasiBarang::class, 'user_id');
+    }
+
+    /**
+     * Relasi hasMany ke BonBarang.
+     *
+     * @return HasMany<BonBarang, $this>
+     */
+    public function bonBarangs(): HasMany
+    {
+        return $this->hasMany(BonBarang::class, 'user_id');
     }
 }

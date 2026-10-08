@@ -26,9 +26,9 @@ class StockOpnameController extends Controller
         if ($search !== '') {
             $query->where(function ($q) use ($search) {
                 $q->where('deskripsi', 'like', "%{$search}%")
-                  ->orWhere('barcode_key', 'like', "%{$search}%")
-                  ->orWhere('barcode', 'like', "%{$search}%")
-                  ->orWhere('lokasi_rak', 'like', "%{$search}%");
+                    ->orWhere('barcode_key', 'like', "%{$search}%")
+                    ->orWhere('barcode', 'like', "%{$search}%")
+                    ->orWhere('lokasi_rak', 'like', "%{$search}%");
             });
         }
 
@@ -84,7 +84,7 @@ class StockOpnameController extends Controller
 
                 $barang->update(['stok_saldo' => $stokFisik]);
 
-                $ket = 'Penyesuaian Fisik (Stock Opname): ' . ($validated['catatan'] ?? 'Pencocokan saldo fisik');
+                $ket = 'Penyesuaian Fisik (Stock Opname): '.($validated['catatan'] ?? 'Pencocokan saldo fisik');
 
                 MutasiBarang::create([
                     'barang_id' => $barang->id,
@@ -93,7 +93,7 @@ class StockOpnameController extends Controller
                     'jumlah' => $jumlahMutasi,
                     'stok_sebelum' => $stokSebelum,
                     'stok_sesudah' => $stokFisik,
-                    'no_dokumen' => 'BA-OPNAME-' . date('Ymd'),
+                    'no_dokumen' => 'BA-OPNAME-'.date('Ymd'),
                     'keterangan' => $ket,
                 ]);
             }

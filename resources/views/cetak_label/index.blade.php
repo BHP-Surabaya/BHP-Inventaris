@@ -43,7 +43,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                     </svg>
-                    <span>Cetak Semua Antrean ({{ $totalAntrean }})</span>
+                    <span>Cetak Label</span>
                 </button>
             </div>
         </div>
@@ -110,177 +110,9 @@
                         </div>
                     </div>
 
-                    <!-- Pilihan Ukuran Kertas Stiker Thermal -->
-                    <div class="space-y-2 pt-1">
-                        <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                            <span>Ukuran Fisik Stiker Label</span>
-                            <span class="text-blue-600 text-[11px] font-mono font-bold" x-text="labelPresetLabel"></span>
-                        </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            <!-- 75 x 50 mm (Rekomendasi / Sesuai Foto) -->
-                            <button type="button" @click="setPreset('75x50')"
-                                    :class="labelPreset === '75x50' ? 'bg-[#0c213e] text-white shadow-xs ring-2 ring-blue-500/20' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                    class="p-2.5 rounded-xl text-left transition flex flex-col justify-between">
-                                <div class="flex items-center justify-between w-full">
-                                    <span class="font-extrabold text-xs">75 x 50 mm</span>
-                                    <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white" x-show="labelPreset === '75x50'">Pas</span>
-                                </div>
-                                <span class="text-[10px] opacity-75 mt-0.5">Standar Stiker (Rekomendasi)</span>
-                            </button>
-
-                            <!-- 75 x 40 mm -->
-                            <button type="button" @click="setPreset('75x40')"
-                                    :class="labelPreset === '75x40' ? 'bg-[#0c213e] text-white shadow-xs ring-2 ring-blue-500/20' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                    class="p-2.5 rounded-xl text-left transition flex flex-col justify-between">
-                                <span class="font-extrabold text-xs">75 x 40 mm</span>
-                                <span class="text-[10px] opacity-75 mt-0.5">Sedang (320px)</span>
-                            </button>
-
-                            <!-- 75 x 30 mm -->
-                            <button type="button" @click="setPreset('75x30')"
-                                    :class="labelPreset === '75x30' ? 'bg-[#0c213e] text-white shadow-xs ring-2 ring-blue-500/20' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                    class="p-2.5 rounded-xl text-left transition flex flex-col justify-between">
-                                <span class="font-extrabold text-xs">75 x 30 mm</span>
-                                <span class="text-[10px] opacity-75 mt-0.5">Kecil (240px)</span>
-                            </button>
-
-                            <!-- 75 x 20 mm -->
-                            <button type="button" @click="setPreset('75x20')"
-                                    :class="labelPreset === '75x20' ? 'bg-[#0c213e] text-white shadow-xs ring-2 ring-blue-500/20' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                    class="p-2.5 rounded-xl text-left transition flex flex-col justify-between">
-                                <span class="font-extrabold text-xs">75 x 20 mm</span>
-                                <span class="text-[10px] opacity-75 mt-0.5">Slim / Tipis (160px)</span>
-                            </button>
-
-                            <!-- 58 x 40 mm -->
-                            <button type="button" @click="setPreset('58x40')"
-                                    :class="labelPreset === '58x40' ? 'bg-[#0c213e] text-white shadow-xs ring-2 ring-blue-500/20' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                    class="p-2.5 rounded-xl text-left transition flex flex-col justify-between">
-                                <span class="font-extrabold text-xs">58 x 40 mm</span>
-                                <span class="text-[10px] opacity-75 mt-0.5">Portable (RPP02N)</span>
-                            </button>
-
-                            <!-- 58 x 30 mm -->
-                            <button type="button" @click="setPreset('58x30')"
-                                    :class="labelPreset === '58x30' ? 'bg-[#0c213e] text-white shadow-xs ring-2 ring-blue-500/20' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                    class="p-2.5 rounded-xl text-left transition flex flex-col justify-between">
-                                <span class="font-extrabold text-xs">58 x 30 mm</span>
-                                <span class="text-[10px] opacity-75 mt-0.5">Portable Mini</span>
-                            </button>
-                        </div>
-
-                        <!-- Pengaturan Posisi Gambar (Agak Ke Atas) -->
-                        <div class="space-y-1.5 pt-2 border-t border-slate-100">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                                <span>Posisi Gambar Cetak</span>
-                                <span class="text-blue-600 text-[11px]" x-text="verticalOffset < 0 ? 'Agak Ke Atas (' + verticalOffset + 'px)' : (verticalOffset === 0 ? 'Normal (Tengah)' : 'Agak Ke Bawah (+' + verticalOffset + 'px)')"></span>
-                            </div>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button type="button" @click="setVerticalOffset(-14)"
-                                        :class="verticalOffset === -14 ? 'bg-[#0c213e] text-white shadow-xs font-bold' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                        class="py-2 px-2 rounded-xl text-xs transition text-center">
-                                    Sangat Ke Atas
-                                </button>
-                                <button type="button" @click="setVerticalOffset(-7)"
-                                        :class="verticalOffset === -7 ? 'bg-[#0c213e] text-white shadow-xs font-bold' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                        class="py-2 px-2 rounded-xl text-xs transition text-center">
-                                    Agak Ke Atas
-                                </button>
-                                <button type="button" @click="setVerticalOffset(0)"
-                                        :class="verticalOffset === 0 ? 'bg-[#0c213e] text-white shadow-xs font-bold' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'"
-                                        class="py-2 px-2 rounded-xl text-xs transition text-center">
-                                    Normal
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Panjang / Tinggi Gambar Cetak -->
-                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs">
-                            <div>
-                                <span class="font-bold text-slate-800">Tinggi Gambar:</span>
-                                <span class="text-[10px] text-slate-500 block">Kurangi jika gambar kepanjangan</span>
-                            </div>
-                            <div class="flex items-center gap-1.5 font-mono">
-                                <button type="button" @click="adjustHeightPixels(-15)" title="Kurang 15px (Lebih Pendek)"
-                                        class="w-7 h-7 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 font-bold flex items-center justify-center text-slate-700 transition">
-                                    -
-                                </button>
-                                <span class="font-bold text-slate-900 px-1 min-w-[50px] text-center" x-text="labelHeight + ' px'"></span>
-                                <button type="button" @click="adjustHeightPixels(15)" title="Tambah 15px (Lebih Panjang)"
-                                        class="w-7 h-7 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 font-bold flex items-center justify-center text-slate-700 transition">
-                                    +
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pilihan Tata Letak (Layout) -->
-                    <div class="space-y-1.5 pt-1">
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Tata Letak (Layout)</label>
-                        <div class="grid grid-cols-2 gap-2.5">
-                            <button type="button" @click="layoutStyle = 'side'; renderCanvas()" 
-                                    :class="layoutStyle === 'side' ? 'border-blue-600 bg-blue-50/50 shadow-xs' : 'border-slate-200 bg-white hover:bg-slate-50'"
-                                    class="p-2.5 rounded-xl border text-left flex items-center gap-2 transition">
-                                <div class="w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                                     :class="layoutStyle === 'side' ? 'border-blue-600' : 'border-slate-300'">
-                                    <div x-show="layoutStyle === 'side'" class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-900 text-xs">Kiri & Kanan (2 Kolom)</div>
-                                    <div class="text-[10px] text-slate-400">Barcode Kiri, Teks Kanan</div>
-                                </div>
-                            </button>
-
-                            <button type="button" @click="layoutStyle = 'stack'; renderCanvas()" 
-                                    :class="layoutStyle === 'stack' ? 'border-blue-600 bg-blue-50/50 shadow-xs' : 'border-slate-200 bg-white hover:bg-slate-50'"
-                                    class="p-2.5 rounded-xl border text-left flex items-center gap-2 transition">
-                                <div class="w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                                     :class="layoutStyle === 'stack' ? 'border-blue-600' : 'border-slate-300'">
-                                    <div x-show="layoutStyle === 'stack'" class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-900 text-xs">Atas & Bawah (Vertikal)</div>
-                                    <div class="text-[10px] text-slate-400">Barcode Lebar di Atas</div>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Simbologi Kode -->
-                    <div class="space-y-1.5 pt-1">
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Format Simbologi Barcode</label>
-                        <div class="grid grid-cols-2 gap-2.5">
-                            <button type="button" @click="symbology = 'code128'; renderCanvas()" 
-                                    :class="symbology === 'code128' ? 'border-blue-600 bg-blue-50/50 shadow-xs' : 'border-slate-200 bg-white hover:bg-slate-50'"
-                                    class="p-3 rounded-xl border text-left flex items-center gap-2.5 transition">
-                                <div class="w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                                     :class="symbology === 'code128' ? 'border-blue-600' : 'border-slate-300'">
-                                    <div x-show="symbology === 'code128'" class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-900 text-xs">Code 128 (1D)</div>
-                                    <div class="text-[10px] text-slate-400">Garis Barcode Linear</div>
-                                </div>
-                            </button>
-
-                            <button type="button" @click="symbology = 'qrcode'; renderCanvas()" 
-                                    :class="symbology === 'qrcode' ? 'border-blue-600 bg-blue-50/50 shadow-xs' : 'border-slate-200 bg-white hover:bg-slate-50'"
-                                    class="p-3 rounded-xl border text-left flex items-center gap-2.5 transition">
-                                <div class="w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                                     :class="symbology === 'qrcode' ? 'border-blue-600' : 'border-slate-300'">
-                                    <div x-show="symbology === 'qrcode'" class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-900 text-xs">QR Code (2D)</div>
-                                    <div class="text-[10px] text-slate-400">Matriks 2 Dimensi</div>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- Tombol Cetak Utama -->
                     <button type="button" @click="printThermal()" 
-                            class="w-full flex items-center justify-center gap-2.5 py-3.5 px-5 rounded-xl bg-[#2563eb] hover:bg-blue-600 active:scale-95 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition mt-2">
+                            class="w-full flex items-center justify-center gap-2.5 py-3.5 px-5 rounded-xl bg-[#2563eb] hover:bg-blue-600 active:scale-95 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition mt-4">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                         </svg>
@@ -363,19 +195,18 @@
 
                     <!-- AREA CANVAS WORKSPACE -->
                     <div class="bg-slate-50 rounded-2xl p-6 lg:p-8 border border-dashed border-slate-200 flex flex-col items-center justify-center min-h-[220px]">
-                        <div class="w-full max-w-[540px] flex items-center justify-between text-[11px] font-mono text-slate-500 pb-2">
-                            <span class="font-bold text-slate-700" x-text="'Stiker: ' + labelWidthMm + ' x ' + labelHeightMm + ' mm (' + printerWidth + ' x ' + labelHeight + ' px)'"></span>
-                            <span>Die-Cut Sensor Gap: 2.0 mm</span>
+                        <div class="w-full max-w-[540px] flex items-center justify-between text-xs text-slate-600 pb-2">
+                            <span class="font-bold text-slate-800">Ukuran Stiker: 75 x 50 mm</span>
+                            <span class="text-emerald-600 font-semibold text-[11px] flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                                Presisi Pas 1:1
+                            </span>
                         </div>
 
                         <!-- LIVE HTML5 CANVAS ELEMENT -->
                         <div :style="'transform: scale(' + zoomLevel + '); transform-origin: center center;'"
                              class="transition-transform duration-200 bg-white p-3 rounded-2xl shadow-lg border border-slate-200 flex justify-center items-center max-w-full overflow-hidden">
                             <canvas id="thermal-canvas" :width="printerWidth" :height="labelHeight" class="block bg-white shadow-2xs border border-slate-300 max-w-full max-h-[360px] w-auto h-auto object-contain"></canvas>
-                        </div>
-
-                        <div class="text-[10px] font-mono text-slate-400 pt-3">
-                            Monochrome Raster 1-Bit ESC/POS (GS v 0) • Head Thermal 0 mm Offset
                         </div>
                     </div>
 
@@ -396,40 +227,7 @@
                     </div>
                 </div>
 
-                <!-- BOX 2: ANTREAN CETAK CEPAT -->
-                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-3.5">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Antrean Cetak Cepat (4 Item Teratas)</h3>
-                        <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full">
-                            {{ $totalAntrean }} item antrean
-                        </span>
-                    </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        @foreach ($queueBarangs as $qb)
-                            <button type="button" 
-                                    @click="setBarang({
-                                        id: {{ $qb->id }},
-                                        barcode_key: {{ json_encode($qb->barcode_key) }},
-                                        barcode: {{ json_encode($qb->barcode ?? 'BMN-'.$qb->id) }},
-                                        deskripsi: {{ json_encode($qb->deskripsi) }},
-                                        satuan: {{ json_encode($qb->satuan) }},
-                                        lokasi_rak: {{ json_encode($qb->lokasi_rak) }}
-                                    })"
-                                    :class="selectedItem.id === {{ $qb->id }} ? 'border-blue-600 bg-blue-50/50 shadow-2xs' : 'border-slate-100 bg-slate-50/60 hover:bg-slate-100/70'"
-                                    class="p-3 rounded-xl border text-left flex items-center justify-between transition">
-                                <div class="min-w-0 mr-2">
-                                    <div class="text-xs font-bold text-slate-900 truncate">{{ $qb->deskripsi }}</div>
-                                    <div class="text-[10px] font-mono text-slate-400 mt-0.5">{{ $qb->barcode_key }}</div>
-                                </div>
-                                <span :class="selectedItem.id === {{ $qb->id }} ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 border border-slate-200'"
-                                      class="text-[10px] font-bold px-2 py-0.5 rounded-md flex-shrink-0 transition">
-                                    <span x-text="selectedItem.id === {{ $qb->id }} ? 'Aktif' : 'Pilih'"></span>
-                                </span>
-                            </button>
-                        @endforeach
-                    </div>
-                </div>
 
             </div>
 
@@ -635,37 +433,43 @@
                 // 2. Garis Batas Luar Stiker (Border)
                 ctx.strokeStyle = '#000000';
                 ctx.lineWidth = 2;
-                ctx.strokeRect(3, 3, w - 6, h - 6);
+                ctx.strokeRect(4, 4, w - 8, h - 8);
 
-                const headerH = 26;
-                const vOff = parseInt(this.verticalOffset) || -7;
+                const headerH = 28;
+                const vOff = parseInt(this.verticalOffset) || 0;
 
-                // 3. Header Atas: Instansi (Posisi Atas Kompak)
+                // 3. Header Atas: Instansi Bergaris Rapi
                 ctx.fillStyle = '#000000';
                 ctx.font = '900 12px Arial, Helvetica, sans-serif';
                 ctx.textAlign = 'left';
-                ctx.fillText('BHP SURABAYA - PERSEDIAAN', 8, 18);
+                ctx.fillText('BHP SURABAYA • PERSEDIAAN BMN', 10, 19);
 
-                ctx.font = '900 11px Arial, Helvetica, sans-serif';
+                ctx.font = 'bold 10px Arial, Helvetica, sans-serif';
                 ctx.textAlign = 'right';
-                ctx.fillText('BHP', w - 8, 18);
+                ctx.fillText('KEMENKUMHAM', w - 10, 19);
 
                 // Garis Pemisah Header
                 ctx.beginPath();
-                ctx.moveTo(3, headerH);
-                ctx.lineTo(w - 3, headerH);
-                ctx.lineWidth = 1.2;
+                ctx.moveTo(4, headerH);
+                ctx.lineTo(w - 4, headerH);
+                ctx.lineWidth = 1.5;
                 ctx.stroke();
 
                 const barcodeStr = (this.selectedItem.barcode_key || '1010301001.000001').trim();
+                const rakStr = (this.selectedItem.lokasi_rak || '-').trim();
+                const satuanStr = (this.selectedItem.satuan || 'Buah').trim();
+                const deskripsiStr = (this.selectedItem.deskripsi || 'Barang Persediaan').trim();
 
                 // 4. ISI KONTEN (TATA LETAK)
                 if (this.layoutStyle === 'stack') {
-                    // --- TATA LETAK ATAS-BAWAH (VERTIKAL) ---
-                    // Posisi Barcode lebih ke atas sesuai verticalOffset
-                    const barY = Math.max(headerH + 4, headerH + 6 + vOff);
+                    // --- TATA LETAK ATAS-BAWAH (VERTIKAL BERKISI RAPI) ---
+                    const availableContentH = h - headerH - 8;
+                    const barcodeAreaH = Math.max(90, Math.round(availableContentH * 0.44));
+                    const tableAreaH = availableContentH - barcodeAreaH;
 
-                    // A. Bagian Atas: Barcode / QR Code
+                    const barY = headerH + 6 + vOff;
+
+                    // A. Bagian Barcode / QR Code
                     if (this.symbology === 'code128') {
                         let chars = [104]; // Start B
                         let checksum = 104;
@@ -681,11 +485,11 @@
                         let totalModules = 0;
                         for (let p of patternSequence) totalModules += parseInt(p);
 
-                        let availableW = w - 40;
+                        let availableW = w - 48;
                         let moduleWidth = Math.max(1, Math.min(3, Math.floor(availableW / totalModules)));
                         let barWidth = totalModules * moduleWidth;
                         let startX = Math.round((w - barWidth) / 2);
-                        let barHeight = Math.min(80, Math.max(50, Math.round((h - headerH) * 0.26)));
+                        let barHeight = Math.min(65, Math.max(45, barcodeAreaH - 34));
 
                         let curX = startX;
                         let isBar = true;
@@ -698,67 +502,140 @@
                             isBar = !isBar;
                         }
 
-                        ctx.font = 'bold 12px monospace';
+                        // Teks Angka Barcode Jelas & Rapi
+                        ctx.font = 'bold 13px "Courier New", monospace';
                         ctx.textAlign = 'center';
-                        ctx.fillText('* ' + barcodeStr + ' *', Math.round(w / 2), barY + barHeight + 13);
-                        var midY = barY + barHeight + 19;
+                        ctx.fillText('* ' + barcodeStr + ' *', Math.round(w / 2), barY + barHeight + 16);
+
                     } else {
-                        let qrSize = Math.min(w - 40, Math.round((h - headerH) * 0.36));
+                        // QR Code
+                        let qrSize = Math.min(w - 40, barcodeAreaH - 24);
                         let qrX = Math.round((w - qrSize) / 2);
                         this.drawQrPattern(ctx, qrX, barY, qrSize);
 
-                        ctx.font = 'bold 11px monospace';
+                        ctx.font = 'bold 12px "Courier New", monospace';
                         ctx.textAlign = 'center';
-                        ctx.fillText(barcodeStr, Math.round(w / 2), barY + qrSize + 13);
-                        var midY = barY + qrSize + 19;
+                        ctx.fillText(barcodeStr, Math.round(w / 2), barY + qrSize + 15);
                     }
 
-                    // Garis Pemisah Tengah Horizontal
+                    const tableTopY = headerH + barcodeAreaH;
+
+                    // Garis Pemisah Antara Barcode & Tabel Rincian
                     ctx.beginPath();
-                    ctx.moveTo(3, midY);
-                    ctx.lineTo(w - 3, midY);
+                    ctx.moveTo(4, tableTopY);
+                    ctx.lineTo(w - 4, tableTopY);
+                    ctx.lineWidth = 1.5;
                     ctx.stroke();
 
-                    // B. Bagian Bawah: Informasi Barang (Mulai tepat di bawah garis tengah)
+                    // B. TABEL RINCIAN BARANG BERSTRUKTUR RAPI
+                    // Baris 1: Nama Barang (Full Width Box)
+                    const row1H = Math.max(34, Math.round(tableAreaH * 0.42));
                     ctx.fillStyle = '#000000';
                     ctx.textAlign = 'left';
 
-                    // Nama Barang
-                    ctx.font = 'bold 15px Arial, Helvetica, sans-serif';
-                    let descLines = this.wrapText(ctx, this.selectedItem.deskripsi || 'Barang Persediaan', w - 30);
-                    let lineY = midY + 18;
-                    for (let i = 0; i < Math.min(2, descLines.length); i++) {
-                        ctx.fillText(descLines[i], 16, lineY);
-                        lineY += 18;
+                    ctx.font = '900 9px Arial, sans-serif';
+                    ctx.fillStyle = '#333333';
+                    ctx.fillText('NAMA BARANG', 12, tableTopY + 13);
+
+                    ctx.font = 'bold 14px Arial, sans-serif';
+                    ctx.fillStyle = '#000000';
+                    let descLines = this.wrapText(ctx, deskripsiStr, w - 24);
+                    if (descLines.length === 1) {
+                        ctx.fillText(descLines[0], 12, tableTopY + 28);
+                    } else {
+                        ctx.fillText(descLines[0], 12, tableTopY + 27);
+                        if (descLines[1] && row1H > 38) {
+                            ctx.font = 'bold 12px Arial, sans-serif';
+                            ctx.fillText(descLines[1], 12, tableTopY + 41);
+                        }
                     }
 
-                    // Detail Grid di Bawah Nama
-                    ctx.font = 'bold 12px monospace';
-                    ctx.fillText('Kode: ' + barcodeStr, 16, lineY + 12);
+                    const row2TopY = tableTopY + row1H;
 
-                    ctx.font = 'bold 12.5px Arial';
-                    ctx.fillText('Rak: ' + (this.selectedItem.lokasi_rak || '-'), 16, lineY + 30);
+                    // Garis Pemisah Bawah Nama Barang
+                    ctx.beginPath();
+                    ctx.moveTo(4, row2TopY);
+                    ctx.lineTo(w - 4, row2TopY);
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
 
-                    const rightColX = Math.round(w * 0.54);
-                    ctx.font = '12.5px Arial';
-                    ctx.fillText('Satuan: ' + (this.selectedItem.satuan || '-'), rightColX, lineY + 12);
-                    ctx.fillText('Kondisi: Baik', rightColX, lineY + 30);
+                    // Baris 2 & 3: Grid 2 Kolom Tegas (Kiri: Kode & Rak, Kanan: Satuan & Kondisi)
+                    const colMidX = Math.round(w * 0.58);
+                    const row2H = Math.round((h - 4 - row2TopY) / 2);
+
+                    // Garis Vertikal Pemisah Kolom Tengah
+                    ctx.beginPath();
+                    ctx.moveTo(colMidX, row2TopY);
+                    ctx.lineTo(colMidX, h - 4);
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    // Garis Horizontal Pemisah Sub-baris
+                    const subRowY = row2TopY + row2H;
+                    ctx.beginPath();
+                    ctx.moveTo(4, subRowY);
+                    ctx.lineTo(w - 4, subRowY);
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+
+                    // --- ISI KOLOM KIRI (LEBAR ~58%) ---
+                    // Sub-baris 1 Kiri: Kode BMN
+                    ctx.fillStyle = '#444444';
+                    ctx.font = '900 8.5px Arial, sans-serif';
+                    ctx.fillText('KODE BMN:', 12, row2TopY + 12);
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 12px "Courier New", monospace';
+                    ctx.fillText(barcodeStr, 76, row2TopY + 12);
+
+                    // Sub-baris 2 Kiri: Lokasi Rak (dengan pemotongan jika terlalu panjang)
+                    ctx.fillStyle = '#444444';
+                    ctx.font = '900 8.5px Arial, sans-serif';
+                    ctx.fillText('LOKASI RAK:', 12, subRowY + 13);
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 11.5px Arial, sans-serif';
+                    let displayRak = rakStr;
+                    const maxRakWidth = colMidX - 86;
+                    if (ctx.measureText(displayRak).width > maxRakWidth) {
+                        while (displayRak.length > 3 && ctx.measureText(displayRak + '...').width > maxRakWidth) {
+                            displayRak = displayRak.substring(0, displayRak.length - 1);
+                        }
+                        displayRak += '...';
+                    }
+                    ctx.fillText(displayRak, 80, subRowY + 13);
+
+                    // --- ISI KOLOM KANAN (LEBAR ~42%) ---
+                    // Sub-baris 1 Kanan: Satuan
+                    ctx.fillStyle = '#444444';
+                    ctx.font = '900 8.5px Arial, sans-serif';
+                    ctx.fillText('SATUAN:', colMidX + 10, row2TopY + 12);
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 11.5px Arial, sans-serif';
+                    ctx.fillText(satuanStr, colMidX + 62, row2TopY + 12);
+
+                    // Sub-baris 2 Kanan: Kondisi
+                    ctx.fillStyle = '#444444';
+                    ctx.font = '900 8.5px Arial, sans-serif';
+                    ctx.fillText('KONDISI:', colMidX + 10, subRowY + 13);
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 11.5px Arial, sans-serif';
+                    ctx.fillText('Baik (Tersedia)', colMidX + 62, subRowY + 13);
 
                 } else {
-                    // --- TATA LETAK KIRI-KANAN (2 KOLOM) ---
-                    const splitX = Math.round(w * 0.48);
+                    // --- TATA LETAK KIRI-KANAN (2 KOLOM SUPER RAPI) ---
+                    const splitX = Math.round(w * 0.44);
 
-                    // Garis Pemisah Vertikal
+                    // Garis Pemisah Vertikal Utama
                     ctx.beginPath();
                     ctx.moveTo(splitX, headerH);
-                    ctx.lineTo(splitX, h - 3);
+                    ctx.lineTo(splitX, h - 4);
+                    ctx.lineWidth = 1.5;
                     ctx.stroke();
 
                     // KOLOM KIRI: Barcode / QR Code
-                    const barY = Math.max(headerH + 4, headerH + 8 + vOff);
+                    const barY = Math.max(headerH + 6, headerH + 10 + vOff);
 
                     if (this.symbology === 'code128') {
-                        let chars = [104]; // Start B
+                        let chars = [104];
                         let checksum = 104;
                         for (let i = 0; i < barcodeStr.length; i++) {
                             let code = barcodeStr.charCodeAt(i) - 32;
@@ -766,17 +643,17 @@
                             checksum += code * (i + 1);
                         }
                         chars.push(checksum % 103);
-                        chars.push(106); // Stop
+                        chars.push(106);
 
                         let patternSequence = chars.map(c => this.code128Patterns[c] || '212222').join('');
                         let totalModules = 0;
                         for (let p of patternSequence) totalModules += parseInt(p);
 
-                        let availableWidth = splitX - 16;
+                        let availableWidth = splitX - 20;
                         let moduleWidth = Math.max(1, Math.floor(availableWidth / totalModules));
                         let barWidth = totalModules * moduleWidth;
-                        let startX = Math.round(8 + (availableWidth - barWidth) / 2);
-                        let barHeight = Math.min(140, Math.round((h - headerH) * 0.52));
+                        let startX = Math.round(10 + (availableWidth - barWidth) / 2);
+                        let barHeight = Math.min(130, Math.round((h - headerH) * 0.52));
 
                         let curX = startX;
                         let isBar = true;
@@ -789,83 +666,95 @@
                             isBar = !isBar;
                         }
 
-                        ctx.font = 'bold 11px monospace';
+                        ctx.font = 'bold 11px "Courier New", monospace';
                         ctx.textAlign = 'center';
-                        ctx.fillText('* ' + barcodeStr + ' *', Math.round(splitX / 2), barY + barHeight + 14);
+                        ctx.fillText('* ' + barcodeStr + ' *', Math.round(splitX / 2), barY + barHeight + 16);
 
                     } else {
-                        // QR Code
-                        let qrSize = Math.min(splitX - 26, Math.round((h - headerH) * 0.56));
+                        let qrSize = Math.min(splitX - 24, Math.round((h - headerH) * 0.58));
                         let qrX = Math.round((splitX - qrSize) / 2);
                         this.drawQrPattern(ctx, qrX, barY, qrSize);
 
-                        ctx.font = 'bold 10px monospace';
+                        ctx.font = 'bold 10px "Courier New", monospace';
                         ctx.textAlign = 'center';
-                        ctx.fillText(barcodeStr, Math.round(splitX / 2), barY + qrSize + 13);
+                        ctx.fillText(barcodeStr, Math.round(splitX / 2), barY + qrSize + 14);
                     }
 
-                    // KOLOM KANAN: Informasi Barang
+                    // KOLOM KANAN: TABEL RINCIAN BARIS
                     ctx.fillStyle = '#000000';
                     ctx.textAlign = 'left';
-                    const textStartX = splitX + 10;
-                    const maxTextWidth = w - textStartX - 8;
+                    const textStartX = splitX + 12;
+                    const maxTextWidth = w - textStartX - 10;
 
-                    let currentY = Math.max(headerH + 8, headerH + 12 + vOff);
+                    let currentY = headerH + 16 + vOff;
 
-                    // Section Title
-                    ctx.font = '900 10px Arial, Helvetica, sans-serif';
-                    ctx.fillStyle = '#64748b';
+                    // 1. Nama Barang
+                    ctx.font = '900 9px Arial, sans-serif';
+                    ctx.fillStyle = '#444444';
                     ctx.fillText('NAMA BARANG:', textStartX, currentY);
-                    currentY += 16;
+                    currentY += 15;
 
-                    // Nama Barang
                     ctx.fillStyle = '#000000';
-                    ctx.font = 'bold 14px Arial, Helvetica, sans-serif';
-                    let descLines = this.wrapText(ctx, this.selectedItem.deskripsi || 'Barang Persediaan', maxTextWidth);
-                    for (let i = 0; i < Math.min(3, descLines.length); i++) {
+                    ctx.font = 'bold 14px Arial, sans-serif';
+                    let descLines = this.wrapText(ctx, deskripsiStr, maxTextWidth);
+                    for (let i = 0; i < Math.min(2, descLines.length); i++) {
                         ctx.fillText(descLines[i], textStartX, currentY);
-                        currentY += 18;
+                        currentY += 17;
                     }
 
-                    // Garis Pemisah Kecil
-                    currentY += 3;
+                    // Garis Pemisah
+                    currentY += 4;
                     ctx.beginPath();
-                    ctx.moveTo(textStartX, currentY);
-                    ctx.lineTo(w - 10, currentY);
-                    ctx.strokeStyle = '#cbd5e1';
+                    ctx.moveTo(splitX, currentY);
+                    ctx.lineTo(w - 4, currentY);
+                    ctx.strokeStyle = '#cccccc';
+                    ctx.lineWidth = 1;
                     ctx.stroke();
                     ctx.strokeStyle = '#000000';
+                    currentY += 15;
+
+                    // 2. Kode BMN
+                    ctx.font = '900 9px Arial, sans-serif';
+                    ctx.fillStyle = '#444444';
+                    ctx.fillText('KODE BMN:', textStartX, currentY);
                     currentY += 14;
 
-                    // Kode BMN
-                    ctx.font = '900 9.5px Arial, Helvetica, sans-serif';
-                    ctx.fillStyle = '#64748b';
-                    ctx.fillText('KODE BARCODE / BMN:', textStartX, currentY);
-                    currentY += 14;
-
-                    ctx.font = 'bold 12px monospace';
+                    ctx.font = 'bold 12px "Courier New", monospace';
                     ctx.fillStyle = '#000000';
                     ctx.fillText(barcodeStr, textStartX, currentY);
                     currentY += 18;
 
-                    // Lokasi Rak
-                    ctx.font = '900 9.5px Arial, Helvetica, sans-serif';
-                    ctx.fillStyle = '#64748b';
+                    // Garis Pemisah
+                    ctx.beginPath();
+                    ctx.moveTo(splitX, currentY);
+                    ctx.lineTo(w - 4, currentY);
+                    ctx.strokeStyle = '#cccccc';
+                    ctx.stroke();
+                    ctx.strokeStyle = '#000000';
+                    currentY += 15;
+
+                    // 3. Lokasi Penyimpanan
+                    ctx.font = '900 9px Arial, sans-serif';
+                    ctx.fillStyle = '#444444';
                     ctx.fillText('LOKASI PENYIMPANAN:', textStartX, currentY);
                     currentY += 14;
 
-                    ctx.font = 'bold 13px Arial, Helvetica, sans-serif';
+                    ctx.font = 'bold 12px Arial, sans-serif';
                     ctx.fillStyle = '#000000';
-                    let rakStr = this.selectedItem.lokasi_rak || 'Gudang Utama';
-                    if (ctx.measureText(rakStr).width > maxTextWidth) {
-                        rakStr = rakStr.substring(0, 19) + '...';
+                    let displayRak = rakStr;
+                    if (ctx.measureText(displayRak).width > maxTextWidth) {
+                        while (displayRak.length > 3 && ctx.measureText(displayRak + '...').width > maxTextWidth) {
+                            displayRak = displayRak.substring(0, displayRak.length - 1);
+                        }
+                        displayRak += '...';
                     }
-                    ctx.fillText(rakStr, textStartX, currentY);
+                    ctx.fillText(displayRak, textStartX, currentY);
                     currentY += 18;
 
-                    // Satuan & Kondisi
-                    ctx.font = '12px Arial, Helvetica, sans-serif';
-                    ctx.fillText((this.selectedItem.satuan || 'Buah') + ' • Baik', textStartX, currentY);
+                    // 4. Satuan & Kondisi
+                    ctx.font = 'bold 11.5px Arial, sans-serif';
+                    ctx.fillStyle = '#222222';
+                    ctx.fillText('Satuan: ' + satuanStr + '  |  Kondisi: Baik', textStartX, currentY);
                 }
             },
 
