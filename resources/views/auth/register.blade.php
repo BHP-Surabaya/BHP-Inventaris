@@ -199,7 +199,7 @@
                     <div class="flex items-center gap-2 mb-3">
                         <span class="step-badge">1</span>
                         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">
-                            Data Identitas & Profesi
+                            Data Identitas & Hak Akses Akun
                         </h3>
                     </div>
 
@@ -283,26 +283,77 @@
                         </div>
                     </div>
 
-                    <!-- Pekerjaan / Profesi -->
+                    <!-- Peran / Hak Akses Akun Sistem -->
+                    <div class="mt-4">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                            Peran / Role Akun Sistem <span class="text-red-500">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- Option 1: Pegawai Gudang -->
+                            <label class="relative flex items-start gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer transition-all hover:border-blue-400 hover:bg-blue-50/30 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-2 has-[:checked]:ring-blue-500/20">
+                                <input 
+                                    type="radio" 
+                                    name="role" 
+                                    value="pegawai_gudang" 
+                                    class="mt-1 text-blue-600 focus:ring-blue-500"
+                                    {{ old('role', 'pegawai_gudang') === 'pegawai_gudang' ? 'checked' : '' }}
+                                >
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-xs font-bold text-slate-800">Pegawai Gudang</span>
+                                        <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">Operasional</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 mt-1 leading-snug">
+                                        Pelayanan Bon Pengeluaran ATK (Kasir Scan Barcode) & Cetak Label thermal.
+                                    </p>
+                                </div>
+                            </label>
+
+                            <!-- Option 2: Administrator BMN -->
+                            <label class="relative flex items-start gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer transition-all hover:border-blue-400 hover:bg-blue-50/30 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-2 has-[:checked]:ring-blue-500/20">
+                                <input 
+                                    type="radio" 
+                                    name="role" 
+                                    value="admin" 
+                                    class="mt-1 text-blue-600 focus:ring-blue-500"
+                                    {{ old('role') === 'admin' ? 'checked' : '' }}
+                                >
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-xs font-bold text-slate-800">Administrator BMN</span>
+                                        <span class="text-[10px] font-semibold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">Full Access</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 mt-1 leading-snug">
+                                        Akses penuh: master data barang, pembelian, stock opname, laporan & bon.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+                        @error('role')
+                            <p class="text-[11px] text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Unit Kerja / Seksi (BHP Surabaya) -->
                     <div class="mt-4">
                         <label for="pekerjaan" class="block text-xs font-medium text-slate-700 mb-1">
-                            Pekerjaan / Profesi
+                            Unit Kerja / Seksi di Balai Harta Peninggalan
                         </label>
                         <select 
                             id="pekerjaan" 
                             name="pekerjaan" 
                             class="custom-input text-slate-700 cursor-pointer"
                         >
-                            <option value="" disabled {{ old('pekerjaan') ? '' : 'selected' }}>-- Pilih Pekerjaan / Unit Kerja --</option>
-                            <option value="Pegawai Balai Harta Peninggalan" {{ old('pekerjaan') == 'Pegawai Balai Harta Peninggalan' ? 'selected' : '' }}>Pegawai / Staf Balai Harta Peninggalan</option>
-                            <option value="Pengelola BMN / Logistik" {{ old('pekerjaan') == 'Pengelola BMN / Logistik' ? 'selected' : '' }}>Pengelola BMN & Kasir Inventaris</option>
-                            <option value="Notaris / PPAT" {{ old('pekerjaan') == 'Notaris / PPAT' ? 'selected' : '' }}>Notaris / PPAT</option>
-                            <option value="Kurator Negara" {{ old('pekerjaan') == 'Kurator Negara' ? 'selected' : '' }}>Kurator Negara</option>
-                            <option value="Perorangan / Pemohon" {{ old('pekerjaan') == 'Perorangan / Pemohon' ? 'selected' : '' }}>Perorangan / Pemohon Umum</option>
+                            <option value="" disabled {{ old('pekerjaan') ? '' : 'selected' }}>-- Pilih Unit Kerja / Seksi --</option>
+                            <option value="Subbagian Tata Usaha" {{ old('pekerjaan') == 'Subbagian Tata Usaha' ? 'selected' : '' }}>Subbagian Tata Usaha</option>
+                            <option value="Seksi Kurator Negara" {{ old('pekerjaan') == 'Seksi Kurator Negara' ? 'selected' : '' }}>Seksi Kurator Negara</option>
+                            <option value="Seksi Pelayanan & Pengawasan Harta Peninggalan" {{ old('pekerjaan') == 'Seksi Pelayanan & Pengawasan Harta Peninggalan' ? 'selected' : '' }}>Seksi Pelayanan & Pengawasan Harta Peninggalan</option>
+                            <option value="Pengelola BMN & Gudang Persediaan" {{ old('pekerjaan') == 'Pengelola BMN & Gudang Persediaan' ? 'selected' : '' }}>Pengelola BMN & Gudang Persediaan</option>
+                            <option value="Pegawai / Staf Balai Harta Peninggalan" {{ old('pekerjaan') == 'Pegawai / Staf Balai Harta Peninggalan' ? 'selected' : '' }}>Pegawai / Staf Balai Harta Peninggalan</option>
                             <option value="Lainnya" {{ old('pekerjaan') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
                         <p class="text-[11px] text-slate-400 mt-1 italic">
-                            *Pilih pekerjaan/profesi untuk penyesuaian hak akses permohonan.
+                            *Unit kerja atau seksi penempatan di Balai Harta Peninggalan Surabaya.
                         </p>
                     </div>
                 </div>

@@ -26,6 +26,30 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+            'role' => 'pegawai_gudang',
+        ]);
+        $response->assertRedirect(route('dashboard', absolute: false));
+    }
+
+    public function test_new_users_can_register_with_admin_role(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'Admin User',
+            'email' => 'admin_test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'role' => 'admin',
+            'pekerjaan' => 'Pengelola BMN & Gudang Persediaan',
+        ]);
+
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', [
+            'email' => 'admin_test@example.com',
+            'role' => 'admin',
+            'pekerjaan' => 'Pengelola BMN & Gudang Persediaan',
+        ]);
         $response->assertRedirect(route('dashboard', absolute: false));
     }
 }

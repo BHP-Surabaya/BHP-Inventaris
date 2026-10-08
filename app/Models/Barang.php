@@ -67,7 +67,7 @@ class Barang extends Model
      */
     public function getKategoriLabelAttribute(): string
     {
-        if (!empty($this->kategori)) {
+        if (! empty($this->kategori)) {
             return $this->kategori;
         }
 
@@ -86,7 +86,7 @@ class Barang extends Model
      */
     public function getStatusDataAttribute(): array
     {
-        if (!empty($this->status_khusus)) {
+        if (! empty($this->status_khusus)) {
             return [
                 'text' => $this->status_khusus,
                 'class' => 'bg-rose-50 text-rose-700 border-rose-200',

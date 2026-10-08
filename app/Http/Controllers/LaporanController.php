@@ -91,7 +91,7 @@ class LaporanController extends Controller
 
         $data = $this->getDataLaporan($jenis, $dariTanggal, $sampaiTanggal, $selectedKategori, false);
 
-        $fileName = 'Laporan_' . strtoupper($jenis) . '_' . date('Ymd_His') . '.csv';
+        $fileName = 'Laporan_'.strtoupper($jenis).'_'.date('Ymd_His').'.csv';
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
@@ -156,7 +156,7 @@ class LaporanController extends Controller
                         $item->barang?->deskripsi ?? '-',
                         $item->barang?->barcode_key ?? '-',
                         $item->jenis,
-                        ($item->jenis === 'MASUK' ? '+' : '-') . $item->jumlah,
+                        ($item->jenis === 'MASUK' ? '+' : '-').$item->jumlah,
                         $item->stok_sebelum,
                         $item->stok_sesudah,
                         $item->keterangan ?? '-',
@@ -180,6 +180,7 @@ class LaporanController extends Controller
                 $query->where('kategori', 'like', "%{$kategori}%");
             }
             $query->orderBy('deskripsi');
+
             return $paginate ? $query->paginate(25)->withQueryString() : $query->get();
         }
 
@@ -189,6 +190,7 @@ class LaporanController extends Controller
                 ->whereDate('created_at', '>=', $dariTanggal)
                 ->whereDate('created_at', '<=', $sampaiTanggal)
                 ->latest();
+
             return $paginate ? $query->paginate(25)->withQueryString() : $query->get();
         }
 
@@ -198,6 +200,7 @@ class LaporanController extends Controller
                 ->whereDate('created_at', '>=', $dariTanggal)
                 ->whereDate('created_at', '<=', $sampaiTanggal)
                 ->latest();
+
             return $paginate ? $query->paginate(25)->withQueryString() : $query->get();
         }
 
@@ -205,8 +208,8 @@ class LaporanController extends Controller
         $query = MutasiBarang::with(['barang', 'user'])
             ->where(function ($q) {
                 $q->where('no_dokumen', 'like', 'BA-OPNAME%')
-                  ->orWhere('keterangan', 'like', '%Opname%')
-                  ->orWhere('keterangan', 'like', '%Penyesuaian%');
+                    ->orWhere('keterangan', 'like', '%Opname%')
+                    ->orWhere('keterangan', 'like', '%Penyesuaian%');
             })
             ->whereDate('created_at', '>=', $dariTanggal)
             ->whereDate('created_at', '<=', $sampaiTanggal)

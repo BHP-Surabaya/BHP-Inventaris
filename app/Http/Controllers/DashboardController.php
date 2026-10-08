@@ -29,7 +29,7 @@ class DashboardController extends Controller
             ->map(function ($item) {
                 $min = $item->min_stok > 0 ? $item->min_stok : 1;
                 $defisit = max(0, round((($min - $item->stok_saldo) / $min) * 100));
-                
+
                 $status = 'Menipis';
                 $badgeBg = 'bg-sky-50 text-sky-700 border-sky-200';
                 $iconType = 'box';

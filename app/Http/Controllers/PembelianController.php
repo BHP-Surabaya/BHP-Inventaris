@@ -41,11 +41,11 @@ class PembelianController extends Controller
         if ($search !== '') {
             $query->where(function ($q) use ($search) {
                 $q->where('no_dokumen', 'like', "%{$search}%")
-                  ->orWhere('keterangan', 'like', "%{$search}%")
-                  ->orWhereHas('barang', function ($bq) use ($search) {
-                      $bq->where('deskripsi', 'like', "%{$search}%")
-                         ->orWhere('barcode_key', 'like', "%{$search}%");
-                  });
+                    ->orWhere('keterangan', 'like', "%{$search}%")
+                    ->orWhereHas('barang', function ($bq) use ($search) {
+                        $bq->where('deskripsi', 'like', "%{$search}%")
+                            ->orWhere('barcode_key', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -89,15 +89,15 @@ class PembelianController extends Controller
             $stokSesudah = $stokSebelum + $validated['jumlah'];
 
             $updateData = ['stok_saldo' => $stokSesudah];
-            if (!empty($validated['lokasi_rak'])) {
+            if (! empty($validated['lokasi_rak'])) {
                 $updateData['lokasi_rak'] = $validated['lokasi_rak'];
             }
 
             $barang->update($updateData);
 
             $ket = $validated['keterangan'] ?? '';
-            if (!empty($validated['nama_vendor'])) {
-                $ket = 'Vendor/Toko: ' . $validated['nama_vendor'] . ($ket ? ' | ' . $ket : '');
+            if (! empty($validated['nama_vendor'])) {
+                $ket = 'Vendor/Toko: '.$validated['nama_vendor'].($ket ? ' | '.$ket : '');
             }
 
             MutasiBarang::create([
