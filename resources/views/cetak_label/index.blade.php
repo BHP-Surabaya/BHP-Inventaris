@@ -71,10 +71,7 @@
                     <!-- Pilih Barang Terpilih -->
                     <div class="space-y-1.5">
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Barang Yang Dicetak</label>
-                        <select @change="
-                                    const b = {{ $allBarangs->toJson() }}.find(i => i.id == $event.target.value);
-                                    if(b) setBarang(b);
-                                "
+                        <select @change="selectBarang($event.target.value)"
                                 class="w-full rounded-xl border-slate-200 text-xs font-medium focus:border-blue-600 focus:ring-blue-600 py-2.5">
                             @foreach ($allBarangs as $b)
                                 <option value="{{ $b->id }}" {{ ($selectedBarang->id ?? null) == $b->id ? 'selected' : '' }}>
@@ -247,6 +244,7 @@
                 satuan: @json($selectedBarang->satuan ?? 'Buah'),
                 lokasi_rak: @json($selectedBarang->lokasi_rak ?? 'Lemari ATK-1 (Lt.2)')
             },
+            allBarangs: @json($allBarangs),
             copies: 1,
             density: 'High Contrast (120%) - Standar Arsip BHP',
             symbology: 'code128',
@@ -362,6 +360,12 @@
                 this.selectedItem = item;
                 this.renderCanvas();
                 this.triggerToast('Memuat pratinjau: ' + item.deskripsi);
+            },
+
+            selectBarang(id) {
+                if (!id) return;
+                const item = this.allBarangs.find(i => i.id == id);
+                if (item) this.setBarang(item);
             },
 
             wrapText(ctx, text, maxWidth) {

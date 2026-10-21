@@ -22,8 +22,8 @@ class BonBarangController extends Controller
     public function index(Request $request): View
     {
         // 1. Generate Nomor Bon Otomatis (Format: BON-YYYYMM-XXXX)
-        $prefix = 'BON-' . Carbon::now()->format('Ym') . '-';
-        $latestBon = BonBarang::where('no_bon', 'like', $prefix . '%')
+        $prefix = 'BON-'.Carbon::now()->format('Ym').'-';
+        $latestBon = BonBarang::where('no_bon', 'like', $prefix.'%')
             ->orderByDesc('id')
             ->first();
 
@@ -32,7 +32,7 @@ class BonBarangController extends Controller
             $lastSeq = (int) substr($latestBon->no_bon, -4);
             $nextNumber = $lastSeq + 1;
         }
-        $autoNoBon = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        $autoNoBon = $prefix.str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
         // 2. Daftar barang siap pakai untuk modal / autocomplete
         $barangs = Barang::orderBy('deskripsi')
