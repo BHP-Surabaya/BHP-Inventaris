@@ -26,7 +26,7 @@ class EnsureUserHasRole
         }
 
         if (! in_array($user->role, $roles)) {
-            abort(403, 'Akses ditolak. Fitur ini hanya dapat diakses oleh peran: ' . implode(', ', $roles));
+            abort(403, 'Akses ditolak. Fitur ini hanya dapat diakses oleh peran: '.implode(', ', $roles));
         }
 
         return $next($request);
