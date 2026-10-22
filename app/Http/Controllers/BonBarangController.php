@@ -52,7 +52,10 @@ class BonBarangController extends Controller
 
         $riwayatBons = $query->paginate(10)->withQueryString();
 
-        // 4. Daftar Seksi standar di Balai Harta Peninggalan Surabaya
+        // 4. Daftar Pegawai BHP Surabaya (Pemohon Bon)
+        $daftarPegawai = config('pegawai.daftar', []);
+
+        // 5. Daftar Seksi standar di Balai Harta Peninggalan Surabaya
         $daftarSeksi = [
             'Subbagian Tata Usaha',
             'Seksi Kurator Negara / Balai Harta Peninggalan',
@@ -65,7 +68,7 @@ class BonBarangController extends Controller
             'Pos Keamanan / Pengamanan',
         ];
 
-        return view('bon.index', compact('autoNoBon', 'barangs', 'riwayatBons', 'daftarSeksi'));
+        return view('bon.index', compact('autoNoBon', 'barangs', 'riwayatBons', 'daftarSeksi', 'daftarPegawai'));
     }
 
     /**
@@ -113,7 +116,7 @@ class BonBarangController extends Controller
             'no_bon' => 'required|string|max:50|unique:bon_barangs,no_bon',
             'tanggal' => 'required|date',
             'nama_pemohon' => 'required|string|max:100',
-            'seksi_pemohon' => 'required|string|max:100',
+            'seksi_pemohon' => 'nullable|string|max:100',
             'keperluan' => 'nullable|string|max:500',
             'items' => 'required|array|min:1',
             'items.*.barang_id' => 'required|exists:barangs,id',
@@ -136,7 +139,7 @@ class BonBarangController extends Controller
                     'no_bon' => $validated['no_bon'],
                     'tanggal' => $validated['tanggal'],
                     'nama_pemohon' => $validated['nama_pemohon'],
-                    'seksi_pemohon' => $validated['seksi_pemohon'],
+                    'seksi_pemohon' => $validated['seksi_pemohon'] ?? '-',
                     'keperluan' => $validated['keperluan'] ?? 'Kebutuhan operasional persediaan ATK',
                     'user_id' => Auth::id(),
                     'total_item' => $totalItem,
@@ -177,7 +180,7 @@ class BonBarangController extends Controller
                         'jumlah' => $qtyKeluar,
                         'stok_sebelum' => $stokSebelum,
                         'stok_sesudah' => $stokSesudah,
-                        'seksi_pemohon' => $validated['seksi_pemohon'],
+                        'seksi_pemohon' => $validated['seksi_pemohon'] ?? '-',
                         'penerima' => $validated['nama_pemohon'],
                         'no_dokumen' => $validated['no_bon'],
                         'keterangan' => $validated['keperluan'] ?? 'Pengeluaran Bon ATK',

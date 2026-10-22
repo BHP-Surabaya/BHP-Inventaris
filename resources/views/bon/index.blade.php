@@ -64,8 +64,8 @@
                 </div>
                 <div>
                     <div class="text-xs font-bold text-slate-900">{{ Auth::user()->name }}</div>
-                    <div class="text-[10px] text-slate-400 font-medium capitalize">
-                        Peran: <span class="text-blue-600 font-bold">{{ str_replace('_', ' ', Auth::user()->role ?? 'Pegawai Gudang') }}</span>
+                    <div class="text-[10px] text-slate-400 font-medium">
+                        Peran: <span class="text-blue-600 font-bold">{{ Auth::user()?->role_label ?? 'Staff Gudang' }}</span>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,9 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <input type="hidden" name="seksi_pemohon" value="-">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <!-- Tanggal -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tanggal Permintaan</label>
@@ -102,21 +104,17 @@
                                        class="w-full rounded-xl border-slate-200 text-xs font-medium focus:border-blue-600 focus:ring-blue-600 py-2.5">
                             </div>
 
-                            <!-- Nama Pemohon -->
+                            <!-- Nama Pemohon (Langsung Dropdown) -->
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nama Pegawai Pemohon</label>
-                                <input type="text" name="nama_pemohon" x-model="pemohon" required placeholder="Contoh: Budi Santoso / Ibu Rina"
-                                       class="w-full rounded-xl border-slate-200 text-xs font-medium focus:border-blue-600 focus:ring-blue-600 py-2.5">
-                            </div>
-
-                            <!-- Seksi Pemohon -->
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Seksi / Unit Kerja</label>
-                                <select name="seksi_pemohon" x-model="seksi" required
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Nama Pegawai Pemohon</label>
+                                    <span class="text-[10px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">47 Pegawai</span>
+                                </div>
+                                <select name="nama_pemohon" x-model="pemohon" required
                                         class="w-full rounded-xl border-slate-200 text-xs font-medium focus:border-blue-600 focus:ring-blue-600 py-2.5">
-                                    <option value="" disabled selected>-- Pilih Seksi / Ruangan --</option>
-                                    @foreach ($daftarSeksi as $s)
-                                        <option value="{{ $s }}">{{ $s }}</option>
+                                    <option value="" disabled selected>-- Pilih Pegawai Pemohon --</option>
+                                    @foreach ($daftarPegawai as $p)
+                                        <option value="{{ $p }}">{{ $p }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -337,7 +335,9 @@
 
                                 <div>
                                     <div class="font-bold text-xs text-slate-900">{{ $bon->nama_pemohon }}</div>
-                                    <div class="text-[11px] text-slate-500">{{ $bon->seksi_pemohon }}</div>
+                                    @if ($bon->seksi_pemohon && $bon->seksi_pemohon !== '-')
+                                        <div class="text-[11px] text-slate-500">{{ $bon->seksi_pemohon }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="flex items-center justify-between pt-1 border-t border-slate-200/60 text-[11px]">
