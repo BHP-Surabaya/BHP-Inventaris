@@ -204,7 +204,7 @@
                             <div class="text-sm font-bold text-white truncate">{{ Auth::user()?->name ?? 'Pegawai BHP' }}</div>
                             <div class="text-[11px] text-slate-300 truncate flex items-center gap-1.5 mt-0.5">
                                 <span class="inline-block w-1.5 h-1.5 rounded-full {{ Auth::user()?->isAdmin() ? 'bg-amber-400' : 'bg-emerald-400' }}"></span>
-                                <span class="capitalize font-medium">{{ str_replace('_', ' ', Auth::user()?->role ?? 'Pegawai Gudang') }}</span>
+                                <span class="font-medium">{{ Auth::user()?->role_label ?? 'Staff Gudang' }}</span>
                             </div>
                         </div>
                     </div>

@@ -289,7 +289,7 @@
                             Peran / Role Akun Sistem <span class="text-red-500">*</span>
                         </label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <!-- Option 1: Pegawai Gudang -->
+                            <!-- Option 1: Staff Gudang -->
                             <label class="relative flex items-start gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer transition-all hover:border-blue-400 hover:bg-blue-50/30 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-2 has-[:checked]:ring-blue-500/20">
                                 <input 
                                     type="radio" 
@@ -300,7 +300,7 @@
                                 >
                                 <div class="flex-1">
                                     <div class="flex items-center gap-1.5">
-                                        <span class="text-xs font-bold text-slate-800">Pegawai Gudang</span>
+                                        <span class="text-xs font-bold text-slate-800">Staff Gudang</span>
                                         <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">Operasional</span>
                                     </div>
                                     <p class="text-[11px] text-slate-500 mt-1 leading-snug">
@@ -309,7 +309,7 @@
                                 </div>
                             </label>
 
-                            <!-- Option 2: Administrator BMN -->
+                            <!-- Option 2: Admin Gudang -->
                             <label class="relative flex items-start gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer transition-all hover:border-blue-400 hover:bg-blue-50/30 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-2 has-[:checked]:ring-blue-500/20">
                                 <input 
                                     type="radio" 
@@ -320,7 +320,7 @@
                                 >
                                 <div class="flex-1">
                                     <div class="flex items-center gap-1.5">
-                                        <span class="text-xs font-bold text-slate-800">Administrator BMN</span>
+                                        <span class="text-xs font-bold text-slate-800">Admin Gudang</span>
                                         <span class="text-[10px] font-semibold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">Full Access</span>
                                     </div>
                                     <p class="text-[11px] text-slate-500 mt-1 leading-snug">

@@ -20,6 +20,9 @@ class BonBarangTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Bon Pengeluaran Barang');
+        $response->assertViewHas('daftarPegawai');
+        $response->assertSee('MUHAMMAD RIDLWAN, S.Sos., M.Si.');
+        $response->assertSee('PURWO SETYO ADI');
     }
 
     public function test_admin_can_access_bon_page(): void

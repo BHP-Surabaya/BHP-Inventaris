@@ -32,7 +32,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Cek apakah user adalah admin.
+     * Label peran untuk tampilan pengguna (Admin Gudang / Staff Gudang).
+     */
+    public function getRoleLabelAttribute(): string
+    {
+        return match ($this->role) {
+            'admin' => 'Admin Gudang',
+            'pegawai_gudang' => 'Staff Gudang',
+            default => 'Staff Gudang',
+        };
+    }
+
+    /**
+     * Cek apakah user adalah admin gudang.
      */
     public function isAdmin(): bool
     {
@@ -40,11 +52,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Cek apakah user adalah pegawai gudang.
+     * Cek apakah user adalah staff gudang.
      */
     public function isPegawaiGudang(): bool
     {
         return ($this->role ?? 'pegawai_gudang') === 'pegawai_gudang';
+    }
+
+    /**
+     * Alias untuk cek apakah user adalah staff gudang.
+     */
+    public function isStaffGudang(): bool
+    {
+        return $this->isPegawaiGudang();
     }
 
     /**
