@@ -75,13 +75,14 @@
                                 class="w-full rounded-xl border-slate-200 text-xs font-medium focus:border-blue-600 focus:ring-blue-600 py-2.5">
                             @foreach ($allBarangs as $b)
                                 <option value="{{ $b->id }}" {{ ($selectedBarang->id ?? null) == $b->id ? 'selected' : '' }}>
-                                    {{ $b->barcode_key }} — {{ $b->deskripsi }}
+                                    {{ $b->deskripsi }} ({{ $b->barcode_key }}) — Stok: {{ $b->stok_saldo }} {{ $b->satuan }}
                                 </option>
                             @endforeach
                         </select>
                         <div class="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-0.5">
                             <span>Lokasi: <strong class="text-slate-600" x-text="selectedItem.lokasi_rak || '-'"></strong></span>
                             <span>Satuan: <strong class="text-slate-600" x-text="selectedItem.satuan || '-'"></strong></span>
+                            <span>Stok: <strong :class="(selectedItem.stok_saldo || 0) > 0 ? 'text-emerald-600 font-bold' : 'text-rose-500 font-bold'" x-text="(selectedItem.stok_saldo ?? 0) + ' ' + (selectedItem.satuan || '')"></strong></span>
                         </div>
                     </div>
 
@@ -242,7 +243,8 @@
                 barcode: @json($selectedBarang->barcode ?? 'BMN-88329-01'),
                 deskripsi: @json($selectedBarang->deskripsi ?? 'Bolpoint Faster C6 (Hitam 0.7mm)'),
                 satuan: @json($selectedBarang->satuan ?? 'Buah'),
-                lokasi_rak: @json($selectedBarang->lokasi_rak ?? 'Lemari ATK-1 (Lt.2)')
+                lokasi_rak: @json($selectedBarang->lokasi_rak ?? 'Lemari ATK-1 (Lt.2)'),
+                stok_saldo: {{ $selectedBarang->stok_saldo ?? 0 }}
             },
             allBarangs: @json($allBarangs),
             copies: 1,

@@ -179,7 +179,7 @@
                                     <option value="">-- Pilih Barang dari Daftar --</option>
                                     @foreach ($barangs as $b)
                                         <option value="{{ $b->id }}" {{ $b->stok_saldo <= 0 ? 'disabled' : '' }}>
-                                            {{ $b->deskripsi }} (Stok: {{ $b->stok_saldo }})
+                                            {{ $b->deskripsi }} ({{ $b->barcode_key }}) — Stok: {{ $b->stok_saldo }}
                                         </option>
                                     @endforeach
                                 </select>
