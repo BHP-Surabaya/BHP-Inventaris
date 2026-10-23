@@ -15,16 +15,15 @@ class CetakLabelController extends Controller
     {
         $barangId = $request->integer('barang_id');
 
-        // Ambil 4 item antrean default (prioritaskan 4 item representatif)
-        $queueBarangs = Barang::orderByRaw("
-            CASE 
-                WHEN barcode_key = '1010301001.000001' THEN 1
-                WHEN barcode_key = '1010301002.000042' THEN 2
-                WHEN barcode_key = '3050204008.000003' THEN 3
-                WHEN barcode_key = '3020101004.000015' THEN 4
-                ELSE 5
-            END, id ASC
-        ")->take(4)->get();
+        // Ambil 4 item antrean default (utamakan barang yang memiliki stok)
+        $queueBarangs = Barang::where('stok_saldo', '>', 0)
+            ->orderBy('deskripsi')
+            ->take(4)
+            ->get();
+
+        if ($queueBarangs->isEmpty()) {
+            $queueBarangs = Barang::orderBy('deskripsi')->take(4)->get();
+        }
 
         // Cari item yang dipilih, jika tidak ada gunakan item pertama di antrean
         if ($barangId) {
@@ -33,7 +32,9 @@ class CetakLabelController extends Controller
             $selectedBarang = $queueBarangs->first();
         }
 
-        $allBarangs = Barang::select('id', 'barcode_key', 'deskripsi', 'satuan', 'lokasi_rak')->take(50)->get();
+        $allBarangs = Barang::select('id', 'barcode_key', 'barcode', 'deskripsi', 'satuan', 'lokasi_rak', 'stok_saldo')
+            ->orderBy('deskripsi')
+            ->get();
         $totalAntrean = $queueBarangs->count();
 
         return view('cetak_label.index', compact('selectedBarang', 'queueBarangs', 'allBarangs', 'totalAntrean'));
