@@ -55,7 +55,7 @@
                     Katalog & Mutasi Inventaris BHP
                 </h1>
                 <p class="text-xs text-slate-500 mt-1 max-w-2xl leading-relaxed">
-                    Manajemen inventarisasi barang milik negara dan mutasi pengeluaran BHP Kemenkumham.
+                    Manajemen inventarisasi barang milik negara dan mutasi pengeluaran BHP Kementerian Hukum.
                 </p>
             </div>
 

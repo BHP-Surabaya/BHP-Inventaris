@@ -51,7 +51,7 @@
                     <span>Pembelian & Pengadaan Barang</span>
                 </h1>
                 <p class="text-xs text-slate-500 mt-1 max-w-2xl leading-relaxed">
-                    Pusat pencatatan faktur barang masuk, restock logistik, serta dokumentasi pengadaan persediaan kantor BHP Kemenkumham.
+                    Pusat pencatatan faktur barang masuk, restock logistik, serta dokumentasi pengadaan persediaan kantor BHP Kementerian Hukum.
                 </p>
             </div>
 
