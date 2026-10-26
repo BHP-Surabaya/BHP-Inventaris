@@ -36,7 +36,7 @@
                 <div class="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                     <span>Balai Harta Peninggalan Surabaya</span>
                     <span class="text-slate-300">•</span>
-                    <span class="text-slate-500 font-medium normal-case">Kemenkumham RI</span>
+                    <span class="text-slate-500 font-medium normal-case">Kementerian Hukum RI</span>
                 </div>
                 <h1 class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight mt-1">Dashboard Logistik & Persediaan</h1>
                 <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Pusat kendali inventaris, sirkulasi mutasi, dan ketersediaan barang BMN.</p>

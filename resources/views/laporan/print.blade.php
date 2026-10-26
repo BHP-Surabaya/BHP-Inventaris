@@ -225,7 +225,7 @@
         <div class="kop-surat">
             <img src="{{ asset('images/logo-pengayoman.svg') }}" alt="Logo Pengayoman" class="kop-logo">
             <div class="kop-text">
-                <h2>KEMENTERIAN HUKUM DAN HAM REPUBLIK INDONESIA</h2>
+                <h2>KEMENTERIAN HUKUM REPUBLIK INDONESIA</h2>
                 <h2>DIREKTORAT JENDERAL ADMINISTRASI HUKUM UMUM</h2>
                 <h1>BALAI HARTA PENINGGALAN SURABAYA</h1>
                 <p>Jl. Medokan Semampir Indah No. 97, Sukolilo, Surabaya, Jawa Timur 60119 | Telp: (031) 5923985</p>

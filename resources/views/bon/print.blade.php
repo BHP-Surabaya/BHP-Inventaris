@@ -163,9 +163,9 @@
 
     <!-- KOP SURAT RESMI -->
     <div class="header-kop">
-        <img src="{{ asset('images/logo-pengayoman.svg') }}" alt="Logo Kemenkumham">
+        <img src="{{ asset('images/logo-pengayoman.svg') }}" alt="Logo Kementerian Hukum">
         <div class="header-text">
-            <h3>KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA RI</h3>
+            <h3>KEMENTERIAN HUKUM REPUBLIK INDONESIA</h3>
             <h3>KANTOR WILAYAH JAWA TIMUR</h3>
             <h2>BALAI HARTA PENINGGALAN SURABAYA</h2>
             <p>Jalan Mayjen Sungkono No. 89, Surabaya | Telp/Fax: (031) 5678901 | Website: bhp.kemenkumham.go.id</p>

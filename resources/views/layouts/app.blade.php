@@ -58,7 +58,7 @@
                     <!-- Brand Header -->
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-1 group">
                         <img src="{{ asset('images/logo-pengayoman.svg') }}" 
-                             alt="Logo Pengayoman Kemenkumham" 
+                             alt="Logo Pengayoman Kementerian Hukum" 
                              class="h-11 w-auto rounded-lg shadow-md ring-1 ring-white/10 group-hover:scale-105 group-hover:ring-amber-400/40 transition-all duration-200" />
                         <div>
                             <div class="text-xl font-extrabold tracking-wide text-white leading-tight">BHP</div>

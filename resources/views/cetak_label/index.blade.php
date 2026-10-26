@@ -23,7 +23,7 @@
                 <div class="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase tracking-wider">
                     <span>Balai Harta Peninggalan Surabaya</span>
                     <span class="text-slate-300">•</span>
-                    <span class="text-slate-500 font-medium normal-case">Kemenkumham RI</span>
+                    <span class="text-slate-500 font-medium normal-case">Kementerian Hukum RI</span>
                 </div>
                 <h1 class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight mt-1">Cetak Label Barcode BMN</h1>
                 <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Pencetakan stiker label inventaris thermal presisi 1:1 untuk identifikasi fisik BMN.</p>
@@ -452,7 +452,7 @@
 
                 ctx.font = 'bold 10px Arial, Helvetica, sans-serif';
                 ctx.textAlign = 'right';
-                ctx.fillText('KEMENKUMHAM', w - 10, 19);
+                ctx.fillText('KEMENTERIAN HUKUM', w - 10, 19);
 
                 // Garis Pemisah Header
                 ctx.beginPath();
