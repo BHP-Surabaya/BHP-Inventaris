@@ -1,0 +1,19 @@
+services:
+  bhp-inventaris:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bhp_inventaris_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    environment:
+      - AUTORUN_MIGRATIONS=true
+    volumes:
+      - bhp_storage:/var/www/html/storage
+
+volumes:
+  bhp_storage:
+    driver: local
