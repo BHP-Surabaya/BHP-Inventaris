@@ -228,7 +228,7 @@
                 <h2>KEMENTERIAN HUKUM REPUBLIK INDONESIA</h2>
                 <h2>DIREKTORAT JENDERAL ADMINISTRASI HUKUM UMUM</h2>
                 <h1>BALAI HARTA PENINGGALAN SURABAYA</h1>
-                <p>Jl. Medokan Semampir Indah No. 97, Sukolilo, Surabaya, Jawa Timur 60119 | Telp: (031) 5923985</p>
+                <p>Jl. Jenderal S. Parman No.58, Krajan Kulon, Waru, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256 | Telp: (031) 8531785</p>
             </div>
         </div>
         <div class="kop-divider"></div>
@@ -382,17 +382,17 @@
         <div class="ttd-container">
             <div class="ttd-box">
                 <p>Mengetahui,</p>
-                <p><strong>Kepala Balai Harta Peninggalan Surabaya</strong></p>
+                <p><strong>Kepala Sub Bagian Umum</strong></p>
                 <div class="ttd-space"></div>
-                <p class="ttd-nama">HENDRA ANDRIANTO, S.H., M.H.</p>
-                <p>NIP. 19780512 200212 1 001</p>
+                <p class="ttd-nama">Moh. Novie Jibril S. B.</p>
+                <p>NIP. 19841115 201012 1 001</p>
             </div>
 
             <div class="ttd-box">
                 <p>Surabaya, {{ date('d F Y') }}</p>
-                <p><strong>Pengurus Barang Pengguna / Operator BMN</strong></p>
+                <p><strong>Petugas Persediaan / Petugas Gudang</strong></p>
                 <div class="ttd-space"></div>
-                <p class="ttd-nama">{{ Auth::user()?->name ?? 'FERNANDA' }}</p>
+                <p class="ttd-nama">{{ Auth::user()?->name ?? 'Kurniawan Tri' }}</p>
                 <p>NIP. 19950814 202012 1 002</p>
             </div>
         </div>
