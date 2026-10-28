@@ -1,10 +1,51 @@
 <x-app-layout>
     <div x-data="{ 
-            showCreateModal: false, 
+            showCreateModal: {{ $errors->any() ? 'true' : 'false' }}, 
             searchQuery: '{{ $search }}',
             selectedBarang: '',
-            satuanLabel: ''
+            satuanLabel: '',
+            tipeBarang: '{{ old('tipe_barang', 'eksisting') }}',
+            kdBarangInput: '{{ old('kd_barang', '') }}',
+            nextKdSub: '',
+            fullKodePreview: '',
+            isLoadingSubKode: false,
+            subKodeMessage: '',
+            async checkNextKode() {
+                let code = (this.kdBarangInput || '').trim().replace(/\.+$/, '');
+                if (!code) {
+                    this.nextKdSub = '';
+                    this.fullKodePreview = '';
+                    this.subKodeMessage = '';
+                    return;
+                }
+                this.isLoadingSubKode = true;
+                try {
+                    let res = await fetch(`{{ route('pembelian.next-subkode') }}?kd_barang=${encodeURIComponent(code)}`);
+                    let data = await res.json();
+                    if (data && data.next_kd_sub) {
+                        this.nextKdSub = data.next_kd_sub;
+                        this.fullKodePreview = data.full_kode;
+                        if (data.total_existing > 0) {
+                            this.subKodeMessage = `Ditemukan ${data.total_existing} barang dengan kode induk ini. Urutan baru: .${data.next_kd_sub}`;
+                        } else {
+                            this.subKodeMessage = `Kode induk baru (belum pernah ada). Dimulai dari urutan .${data.next_kd_sub}`;
+                        }
+                    }
+                } catch (e) {
+                    console.error('Gagal mengambil sub kode:', e);
+                } finally {
+                    this.isLoadingSubKode = false;
+                }
+            },
+            openModalWith(tipe = 'eksisting') {
+                this.tipeBarang = tipe;
+                this.showCreateModal = true;
+                if (this.kdBarangInput) {
+                    this.checkNextKode();
+                }
+            }
          }" 
+         x-init="if (kdBarangInput) { checkNextKode(); }"
          class="p-6 lg:p-8 space-y-6 max-w-[1600px] mx-auto">
 
         <!-- Flash Messages -->
@@ -56,14 +97,22 @@
             </div>
 
             <!-- Action Button -->
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-2.5">
                 <button type="button" 
-                        @click="showCreateModal = true"
+                        @click="openModalWith('eksisting')"
                         class="px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm flex items-center gap-2.5 shadow-lg shadow-blue-600/25 transition-all duration-150 transform hover:-translate-y-0.5">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
-                    <span>Catat Pembelian Baru</span>
+                    <span>Catat Pembelian</span>
+                </button>
+                <button type="button" 
+                        @click="openModalWith('baru')"
+                        class="px-4 py-3 rounded-2xl bg-white hover:bg-blue-50/50 text-blue-600 border border-blue-200 font-bold text-sm flex items-center gap-2 shadow-xs transition-all duration-150 transform hover:-translate-y-0.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>+ Barang Baru</span>
                 </button>
             </div>
         </div>
@@ -226,7 +275,7 @@
         <!-- MODAL CATAT PEMBELIAN BARU -->
         <div x-show="showCreateModal" 
              x-cloak
-             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+             class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
@@ -235,9 +284,10 @@
              x-transition:leave-end="opacity-0">
             
             <div @click.away="showCreateModal = false"
-                 class="bg-white rounded-3xl shadow-2xl border border-slate-100 max-w-lg w-full p-6 lg:p-8 space-y-6">
+                 class="bg-white rounded-3xl shadow-2xl border border-slate-100 max-w-xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-fade-in">
                 
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4 lg:px-8 bg-slate-50/50">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -247,87 +297,307 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-black text-slate-900">Catat Pembelian Barang</h3>
-                            <p class="text-xs text-slate-500">Menambah stok persediaan BMN yang dibeli</p>
+                            <h3 class="text-base lg:text-lg font-black text-slate-900">Catat Pembelian Barang</h3>
+                            <p class="text-xs text-slate-500">Pencatatan faktur pengadaan & stok persediaan BMN</p>
                         </div>
                     </div>
-                    <button @click="showCreateModal = false" class="text-slate-400 hover:text-slate-600 p-1">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <button @click="showCreateModal = false" type="button" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
 
-                <form method="POST" action="{{ route('pembelian.store') }}" class="space-y-4">
+                <!-- Form -->
+                <form method="POST" action="{{ route('pembelian.store') }}" class="flex flex-col flex-1 overflow-hidden">
                     @csrf
+                    <input type="hidden" name="tipe_barang" :value="tipeBarang" />
 
-                    <!-- Pilih Barang -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                            Pilih Barang (BMN) <span class="text-rose-500">*</span>
-                        </label>
-                        <select name="barang_id" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">-- Pilih Barang yang Dibeli --</option>
-                            @foreach ($daftarBarang as $b)
-                                <option value="{{ $b->id }}">
-                                    {{ $b->deskripsi }} (Stok saat ini: {{ $b->stok_saldo }} {{ $b->satuan }}) - {{ $b->barcode_key }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- Jumlah Beli -->
+                    <!-- Scrollable Form Body -->
+                    <div class="p-6 lg:p-8 space-y-5 overflow-y-auto flex-1">
+                        
+                        <!-- TAB SWITCHER: Barang Eksisting vs Barang Baru -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Jumlah Pembelian <span class="text-rose-500">*</span>
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                                Tipe Barang yang Dibeli
                             </label>
-                            <input type="number" name="jumlah" min="1" required placeholder="Contoh: 10" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                            <div class="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/80">
+                                <button type="button" 
+                                        @click="tipeBarang = 'eksisting'" 
+                                        :class="tipeBarang === 'eksisting' ? 'bg-white text-blue-600 font-bold shadow-sm' : 'text-slate-600 hover:text-slate-900 font-medium'"
+                                        class="py-2.5 px-3 text-xs rounded-xl transition-all duration-150 flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                    </svg>
+                                    <span>Barang Eksisting</span>
+                                </button>
+                                <button type="button" 
+                                        @click="tipeBarang = 'baru'" 
+                                        :class="tipeBarang === 'baru' ? 'bg-white text-blue-600 font-bold shadow-sm' : 'text-slate-600 hover:text-slate-900 font-medium'"
+                                        class="py-2.5 px-3 text-xs rounded-xl transition-all duration-150 flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                    <span>+ Barang Baru</span>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- No Dokumen / Faktur -->
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                No. Faktur / Kuitansi
-                            </label>
-                            <input type="text" name="no_dokumen" placeholder="Contoh: FKT-2026/09/01" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                        <!-- 1. KONDISI: BARANG EKSISTING -->
+                        <div x-show="tipeBarang === 'eksisting'" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Pilih Barang (BMN) <span class="text-rose-500">*</span>
+                                </label>
+                                <select name="barang_id" 
+                                        :required="tipeBarang === 'eksisting'" 
+                                        :disabled="tipeBarang !== 'eksisting'" 
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">-- Pilih Barang yang Dibeli --</option>
+                                    @foreach ($daftarBarang as $b)
+                                        <option value="{{ $b->id }}" {{ old('barang_id') == $b->id ? 'selected' : '' }}>
+                                            {{ $b->deskripsi }} (Stok saat ini: {{ $b->stok_saldo }} {{ $b->satuan }}) - {{ $b->barcode_key }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p class="text-[11px] text-slate-400 mt-1">
+                                    Pilih barang yang sudah terdaftar dalam katalog inventaris BHP.
+                                </p>
+                            </div>
                         </div>
+
+                        <!-- 2. KONDISI: BARANG BARU (BELUM PERNAH TERCANTUM) -->
+                        <div x-show="tipeBarang === 'baru'" class="space-y-4 bg-blue-50/40 p-4 rounded-2xl border border-blue-100" style="display: none;">
+                            <div class="flex items-center gap-2 text-xs font-bold text-blue-900 border-b border-blue-200/60 pb-2">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>Pendaftaran Master Barang Baru</span>
+                            </div>
+
+                            <!-- Input Kode Induk BMN -->
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                        Kode Barang Induk BMN <span class="text-rose-500">*</span>
+                                    </label>
+                                    <span class="text-[10px] text-slate-400">Kode sebelum titik (contoh: 1010305002)</span>
+                                </div>
+                                <div class="relative">
+                                    <input type="text" 
+                                           name="kd_barang" 
+                                           x-model="kdBarangInput" 
+                                           @input.debounce.300ms="checkNextKode()" 
+                                           list="listKdBarang" 
+                                           :required="tipeBarang === 'baru'" 
+                                           :disabled="tipeBarang !== 'baru'" 
+                                           placeholder="Contoh: 1010305002" 
+                                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-mono font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                    
+                                    <div x-show="isLoadingSubKode" class="absolute right-3 top-2.5 text-blue-500">
+                                        <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <datalist id="listKdBarang">
+                                    @foreach ($daftarKdBarang as $kb)
+                                        <option value="{{ $kb->kd_barang }}">{{ $kb->kd_barang }} - {{ $kb->contoh_deskripsi }} ({{ $kb->total_item }} item)</option>
+                                    @endforeach
+                                </datalist>
+
+                                <!-- Preview Badge Auto-generated Kode BMN Lengkap -->
+                                <div x-show="fullKodePreview" class="mt-2 p-3 bg-white border border-blue-200 rounded-xl shadow-xs space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[11px] font-semibold text-slate-500">Kode BMN Otomatis:</span>
+                                        <span class="text-xs font-mono font-black text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200" x-text="fullKodePreview"></span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500" x-text="subKodeMessage"></p>
+                                </div>
+                            </div>
+
+                            <!-- Nama / Deskripsi Barang -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Nama / Deskripsi Barang <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="text" 
+                                       name="deskripsi" 
+                                       value="{{ old('deskripsi') }}" 
+                                       :required="tipeBarang === 'baru'" 
+                                       :disabled="tipeBarang !== 'baru'" 
+                                       placeholder="Contoh: Tinta Printer EPSON L-Series 003 Black" 
+                                       class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                            </div>
+
+                            <!-- Kategori & Satuan -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Kategori <span class="text-rose-500">*</span>
+                                    </label>
+                                    <select name="kategori" 
+                                            :required="tipeBarang === 'baru'" 
+                                            :disabled="tipeBarang !== 'baru'" 
+                                            class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="ATK & Kertas">ATK & Kertas</option>
+                                        <option value="Elektronik & IT">Elektronik & IT</option>
+                                        <option value="Peralatan Kantor">Peralatan Kantor</option>
+                                        <option value="Alat Kebersihan">Alat Kebersihan</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Satuan <span class="text-rose-500">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           name="satuan" 
+                                           value="{{ old('satuan') }}" 
+                                           list="listSatuan" 
+                                           :required="tipeBarang === 'baru'" 
+                                           :disabled="tipeBarang !== 'baru'" 
+                                           placeholder="Contoh: Buah / Rim / Pcs" 
+                                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                    <datalist id="listSatuan">
+                                        <option value="Rim">
+                                        <option value="Pcs">
+                                        <option value="Buah">
+                                        <option value="Dus">
+                                        <option value="Kotak">
+                                        <option value="Botol">
+                                        <option value="Unit">
+                                        <option value="Buku">
+                                        <option value="Roll">
+                                        <option value="Pack">
+                                        <option value="Set">
+                                    </datalist>
+                                </div>
+                            </div>
+
+                            <!-- Spesifikasi & Min Stok -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Spesifikasi <span class="text-slate-400 font-normal">(Opsional)</span>
+                                    </label>
+                                    <input type="text" 
+                                           name="spesifikasi" 
+                                           value="{{ old('spesifikasi') }}" 
+                                           :disabled="tipeBarang !== 'baru'" 
+                                           placeholder="Contoh: 65ml, Original Epson" 
+                                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Batas Min. Stok
+                                    </label>
+                                    <input type="number" 
+                                           name="min_stok" 
+                                           value="{{ old('min_stok', 5) }}" 
+                                           min="0" 
+                                           :disabled="tipeBarang !== 'baru'" 
+                                           placeholder="Default: 5" 
+                                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION INFORMASI FAKTUR & PENGADAAN -->
+                        <div class="pt-2 border-t border-slate-100 space-y-4">
+                            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                                Informasi Transaksi Pengadaan
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Jumlah Beli -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Jumlah Pembelian <span class="text-rose-500">*</span>
+                                    </label>
+                                    <input type="number" 
+                                           name="jumlah" 
+                                           value="{{ old('jumlah') }}" 
+                                           min="1" 
+                                           required 
+                                           placeholder="Contoh: 10" 
+                                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold" />
+                                </div>
+
+                                <!-- No Dokumen / Faktur -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        No. Faktur / Kuitansi
+                                    </label>
+                                    <input type="text" 
+                                           name="no_dokumen" 
+                                           value="{{ old('no_dokumen') }}" 
+                                           placeholder="Contoh: FKT-2026/09/01" 
+                                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Nama Vendor -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Nama Toko / Vendor
+                                    </label>
+                                    <input type="text" 
+                                           name="nama_vendor" 
+                                           value="{{ old('nama_vendor') }}" 
+                                           placeholder="Contoh: CV. Berkah Logistik" 
+                                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                </div>
+
+                                <!-- Lokasi Rak Penyimpanan -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Lokasi Rak Simpan
+                                    </label>
+                                    <input type="text" 
+                                           name="lokasi_rak" 
+                                           value="{{ old('lokasi_rak') }}" 
+                                           placeholder="Contoh: Rak ATK-02" 
+                                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                </div>
+                            </div>
+
+                            <!-- Keterangan Tambahan -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Keterangan / Catatan Pengadaan
+                                </label>
+                                <textarea name="keterangan" 
+                                          rows="2" 
+                                          placeholder="Catatan pengadaan atau peruntukan DIPA..." 
+                                          class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ old('keterangan') }}</textarea>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- Nama Vendor -->
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Nama Toko / Vendor
-                            </label>
-                            <input type="text" name="nama_vendor" placeholder="Contoh: CV. Berkah Logistik" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    <!-- Modal Sticky Footer -->
+                    <div class="flex items-center justify-between px-6 py-4 lg:px-8 border-t border-slate-100 bg-slate-50/50">
+                        <div class="text-[11px] text-slate-400">
+                            <span x-show="tipeBarang === 'baru'">* Otomatis menambah master barang & stok</span>
+                            <span x-show="tipeBarang === 'eksisting'">* Menambah stok barang terdaftar</span>
                         </div>
-
-                        <!-- Lokasi Rak Penyimpanan -->
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Lokasi Rak Simpan
-                            </label>
-                            <input type="text" name="lokasi_rak" placeholder="Contoh: Rak ATK-02" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                        <div class="flex items-center gap-3">
+                            <button type="button" @click="showCreateModal = false" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-xs font-bold hover:bg-slate-100 transition-colors">
+                                Batal
+                            </button>
+                            <button type="submit" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/30 transition-all flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span x-text="tipeBarang === 'baru' ? 'Simpan & Daftarkan Barang' : 'Simpan Pembelian'"></span>
+                            </button>
                         </div>
-                    </div>
-
-                    <!-- Keterangan Tambahan -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                            Keterangan / Catatan Pengadaan
-                        </label>
-                        <textarea name="keterangan" rows="2" placeholder="Catatan pengadaan atau peruntukan DIPA..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-                    </div>
-
-                    <!-- Submit Buttons -->
-                    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-                        <button type="button" @click="showCreateModal = false" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-xs font-bold hover:bg-slate-50 transition-colors">
-                            Batal
-                        </button>
-                        <button type="submit" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/30 transition-colors">
-                            Simpan Pembelian
-                        </button>
                     </div>
                 </form>
             </div>
