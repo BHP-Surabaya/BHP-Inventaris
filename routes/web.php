@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('pembelian')->name('pembelian.')->group(function () {
             Route::get('/', [PembelianController::class, 'index'])->name('index');
             Route::post('/', [PembelianController::class, 'store'])->name('store');
+            Route::get('/next-subkode', [PembelianController::class, 'getNextSubKode'])->name('next-subkode');
         });
 
         Route::prefix('stock-opname')->name('stock-opname.')->group(function () {

@@ -166,9 +166,9 @@
         <img src="{{ asset('images/logo-pengayoman.svg') }}" alt="Logo Kementerian Hukum">
         <div class="header-text">
             <h3>KEMENTERIAN HUKUM REPUBLIK INDONESIA</h3>
-            <h3>KANTOR WILAYAH JAWA TIMUR</h3>
+            <h3>DIREKTORAT JENDERAL ADMINISTRASI HUKUM UMUM</h3>
             <h2>BALAI HARTA PENINGGALAN SURABAYA</h2>
-            <p>Jalan Mayjen Sungkono No. 89, Surabaya | Telp/Fax: (031) 5678901 | Website: bhp.kemenkumham.go.id</p>
+            <p>Jl. Jenderal S. Parman No.58, Krajan Kulon, Waru, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256 | Telp: (031) 8531785</p>
         </div>
     </div>
 
@@ -252,10 +252,10 @@
         <div class="ttd-box">
             <p>Surabaya, {{ $bon->tanggal->translatedFormat('d F Y') }}</p>
             <p>Yang Menyerahkan,</p>
-            <p style="color: #555; font-size: 9pt;">Pengurus Barang / Petugas Gudang</p>
+            <p style="color: #555; font-size: 9pt;">Petugas Persediaan / Petugas Gudang</p>
             <div class="ttd-space"></div>
-            <p class="ttd-name">{{ $bon->user->name ?? 'Petugas Gudang BHP' }}</p>
-            <p style="font-size: 9pt; color: #555;">NIP: ............................................</p>
+            <p class="ttd-name">{{ $bon->user->name ?? 'Kurniawan Tri' }}</p>
+            <p style="font-size: 9pt; color: #555;">NIP. 19950814 202012 1 002</p>
         </div>
     </div>
 
