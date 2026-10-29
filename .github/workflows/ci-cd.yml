@@ -12,7 +12,6 @@ on:
   pull_request:
     branches:
       - main
-  # Memungkinkan kita menjalankan workflow secara manual dari tab Actions di GitHub
   workflow_dispatch:
 
 jobs:
@@ -34,24 +33,24 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, sqlite3, bcmath, gd, zip
           coverage: none
 
-      - name: 📦 Setup Node.js
+      - name: 📦 Setup Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22
 
-      - name:  composer install
+      - name: ⚙️ Setup Environment (.env)
+        run: cp .env.example .env
+
+      - name: 📦 Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction --optimize-autoloader
 
-      - name: 🎨 npm install & build assets
+      - name: 🔑 Generate Application Key
+        run: php artisan key:generate
+
+      - name: 🎨 Install & Build Frontend Assets
         run: |
           npm ci || npm install
           npm run build
-
-      - name: ⚙️ Setup Environment (.env)
-        run: |
-          cp .env.example .env
-          php artisan key:generate
 
       - name: 🚀 Run PHPUnit Tests
         run: php artisan test
@@ -62,7 +61,6 @@ jobs:
   publish-package:
     name: 📦 Build & Publish Docker Image
     needs: tests
-    # Hanya berjalan jika tahap tests sukses DAN berada di branch main atau dijalankan manual
     if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
@@ -73,7 +71,7 @@ jobs:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🔧 Format nama repo ke lowercase (wajib untuk Docker/GHCR)
+      - name: 🔧 Format nama repo ke lowercase
         run: |
           echo "IMAGE_NAME=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
@@ -106,4 +104,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
